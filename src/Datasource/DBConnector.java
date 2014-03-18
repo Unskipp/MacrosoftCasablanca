@@ -9,7 +9,6 @@ package Datasource;
 /**
  *
  * @author Unskipp
- * @author Cristi
  */
 public class DBConnector
 {
