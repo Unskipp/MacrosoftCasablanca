@@ -6,11 +6,18 @@
 
 package Domain;
 
+import Datasource.DBFacade;
+
 /**
  *
  * @author Unskipp
  */
 public class Controller
 {
+    private DBFacade dbf;
     
+    public Controller()
+    {
+        dbf = DBFacade.getInstance();
+    }
 }

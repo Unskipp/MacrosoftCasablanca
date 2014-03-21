@@ -4,34 +4,34 @@
  * and open the template in the editor.
  */
 
-package Presentation.ListFrames;
+package Presentation.Book;
 
 import Domain.Controller;
-import Presentation.Book.Cancellation;
-import Presentation.Book.Room;
-import Presentation.MainPage;
+import Presentation.ListFrames.*;
+import Presentation.*;
 
 /**
  *
  * @author Unskipp
  */
-public class EmployeesList extends javax.swing.JFrame
+public class Cancellation extends javax.swing.JFrame
 {
-
+    
     /**
-     * Creates new form Employees
+     * Creates new form Cancellation
      */
     Controller controller;
-    public EmployeesList()
+    public Cancellation()
     {
         initComponents();
     }
     
-    public EmployeesList(Controller controller)
+    public Cancellation (Controller controller)
     {
         this();
         this.controller=controller;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,12 +42,12 @@ public class EmployeesList extends javax.swing.JFrame
     private void initComponents()
     {
 
-        jComboBoxType = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
         jTextFieldSearch = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
+        jComboBoxType = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -65,10 +65,6 @@ public class EmployeesList extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBoxType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jButton1.setText("Exact match");
-
         jLabel1.setText("Search by");
 
         jList1.setModel(new javax.swing.AbstractListModel()
@@ -78,6 +74,10 @@ public class EmployeesList extends javax.swing.JFrame
             public Object getElementAt(int i) { return strings[i]; }
         });
         jScrollPane1.setViewportView(jList1);
+
+        jComboBoxType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jButton1.setText("Exact match");
 
         jMenu1.setText("HOME");
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter()
@@ -95,13 +95,6 @@ public class EmployeesList extends javax.swing.JFrame
         jMenu3.setText("Book");
 
         jMenuItem1.setText("Room");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
         jMenu3.add(jMenuItem1);
 
         jMenuItem2.setText("Facilities");
@@ -195,7 +188,7 @@ public class EmployeesList extends javax.swing.JFrame
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(69, 69, 69)
                             .addComponent(jComboBoxType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addContainerGap(255, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,7 +202,7 @@ public class EmployeesList extends javax.swing.JFrame
                     .addComponent(jTextFieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -224,14 +217,6 @@ public class EmployeesList extends javax.swing.JFrame
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenu1MouseClicked
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem1ActionPerformed
-    {//GEN-HEADEREND:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        Room frame = new Room(controller);
-        frame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuRommsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuRommsActionPerformed
     {//GEN-HEADEREND:event_jMenuRommsActionPerformed
@@ -298,16 +283,16 @@ public class EmployeesList extends javax.swing.JFrame
             }
         } catch (ClassNotFoundException ex)
         {
-            java.util.logging.Logger.getLogger(EmployeesList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cancellation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex)
         {
-            java.util.logging.Logger.getLogger(EmployeesList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cancellation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex)
         {
-            java.util.logging.Logger.getLogger(EmployeesList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cancellation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex)
         {
-            java.util.logging.Logger.getLogger(EmployeesList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cancellation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -316,7 +301,7 @@ public class EmployeesList extends javax.swing.JFrame
         {
             public void run()
             {
-                new EmployeesList().setVisible(true);
+                new Cancellation().setVisible(true);
             }
         });
     }

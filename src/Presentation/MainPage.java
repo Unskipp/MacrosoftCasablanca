@@ -5,6 +5,9 @@
  */
 package Presentation;
 
+import Domain.Controller;
+import Presentation.Book.Cancellation;
+import Presentation.Book.Room;
 import Presentation.ListFrames.ClientList;
 import Presentation.ListFrames.EmployeesList;
 import Presentation.ListFrames.FacilityList;
@@ -21,9 +24,17 @@ public class MainPage extends javax.swing.JFrame
     /**
      * Creates new form MainPage
      */
+    Controller controller;
     public MainPage()
     {
         initComponents();
+        controller = new Controller();
+    }
+    
+    public MainPage(Controller controller)
+    {
+        this();
+        this.controller=controller;
     }
 
     /**
@@ -40,6 +51,9 @@ public class MainPage extends javax.swing.JFrame
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuRomms = new javax.swing.JMenuItem();
         jMenuClients = new javax.swing.JMenuItem();
@@ -65,6 +79,30 @@ public class MainPage extends javax.swing.JFrame
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Book");
+
+        jMenuItem1.setText("Room");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem1);
+
+        jMenuItem2.setText("Facilities");
+        jMenu3.add(jMenuItem2);
+
+        jMenuItem3.setText("Cancelation");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
+
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("List");
@@ -143,35 +181,35 @@ public class MainPage extends javax.swing.JFrame
 
     private void jMenuRommsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuRommsActionPerformed
     {//GEN-HEADEREND:event_jMenuRommsActionPerformed
-        RoomList frame = new RoomList();
+        RoomList frame = new RoomList(controller);
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuRommsActionPerformed
 
     private void jMenuClientsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuClientsActionPerformed
     {//GEN-HEADEREND:event_jMenuClientsActionPerformed
-        ClientList frame = new ClientList();
+        ClientList frame = new ClientList(controller);
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuClientsActionPerformed
 
     private void jMenuFacilitiesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuFacilitiesActionPerformed
     {//GEN-HEADEREND:event_jMenuFacilitiesActionPerformed
-        FacilityList frame = new FacilityList();
+        FacilityList frame = new FacilityList(controller);
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuFacilitiesActionPerformed
 
     private void jMenuEmployeesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuEmployeesActionPerformed
     {//GEN-HEADEREND:event_jMenuEmployeesActionPerformed
-        EmployeesList frame = new EmployeesList();
+        EmployeesList frame = new EmployeesList(controller);
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuEmployeesActionPerformed
 
     private void jMenuReservationsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuReservationsActionPerformed
     {//GEN-HEADEREND:event_jMenuReservationsActionPerformed
-        ReservationList frame = new ReservationList();
+        ReservationList frame = new ReservationList(controller);
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuReservationsActionPerformed
@@ -179,10 +217,26 @@ public class MainPage extends javax.swing.JFrame
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jMenu1MouseClicked
     {//GEN-HEADEREND:event_jMenu1MouseClicked
         // TODO add your handling code here:
-        MainPage frame = new MainPage();
+        MainPage frame = new MainPage(controller);
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenu1MouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem1ActionPerformed
+    {//GEN-HEADEREND:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        Room frame = new Room(controller);
+        frame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem3ActionPerformed
+    {//GEN-HEADEREND:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        Cancellation frame = new Cancellation(controller);
+        frame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -239,6 +293,9 @@ public class MainPage extends javax.swing.JFrame
     private javax.swing.JMenuItem jMenuClients;
     private javax.swing.JMenuItem jMenuEmployees;
     private javax.swing.JMenuItem jMenuFacilities;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuReservations;
     private javax.swing.JMenuItem jMenuRomms;
     // End of variables declaration//GEN-END:variables
