@@ -12,10 +12,11 @@ package Domain;
 public class Clients
 {
 
-    private String id, firstName, lastName, address, country, phone, email, travelAgency, password;
+    private String id, firstName, lastName, address, country, email, travelAgency, password;
+    int phone,versionNumber;
 
-    public Clients(String id, String firsName, String lastName, String address, String country, String travelAgency, String phone,
-            String email, String password)
+    public Clients(String id, String firsName, String lastName, String address, String country, String travelAgency, int phone,
+            String email, String password,int versionNumber)
     {
         this.id = id;
         this.firstName = firsName;
@@ -26,6 +27,7 @@ public class Clients
         this.email = email;
         this.travelAgency = travelAgency;
         this.password = password;
+        this.versionNumber=versionNumber;
     }
 
     public String getFirstName()
@@ -68,16 +70,6 @@ public class Clients
         this.country = country;
     }
 
-    public String getPhone()
-    {
-        return phone;
-    }
-
-    public void setPhone(String phone)
-    {
-        this.phone = phone;
-    }
-
     public String getEmail()
     {
         return email;
@@ -116,6 +108,26 @@ public class Clients
     public void setId(String id)
     {
         this.id = id;
+    }
+
+    public int getPhone()
+    {
+        return phone;
+    }
+
+    public void setPhone(int phone)
+    {
+        this.phone = phone;
+    }
+
+    public int getVersionNumber()
+    {
+        return versionNumber;
+    }
+
+    public void setVersionNumber(int versionNumber)
+    {
+        this.versionNumber = versionNumber;
     }
 
     
