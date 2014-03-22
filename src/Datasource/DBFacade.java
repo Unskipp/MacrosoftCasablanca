@@ -27,6 +27,7 @@ public class DBFacade
     private DBFacade()
     {
         connection = new DBConnector().getConnection();
+        map = new DataMapper();
     }
 
     public static DBFacade getInstance()

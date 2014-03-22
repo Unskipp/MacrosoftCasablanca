@@ -70,6 +70,7 @@ public class DataMapper
                 System.out.println(e.getMessage());
             }
         }
+        
         return empList;
     }
 
@@ -79,26 +80,27 @@ public class DataMapper
         Employees emp = null;
         String SQLString1 = // get order
                 "select * "
-                + "from Employeess ";
+                + "from Employees ";
         PreparedStatement statement = null;
-
+        
         try
         {
-            ResultSet rs = statement.executeQuery();
+            statement=con.prepareStatement(SQLString1);
+            ResultSet rs = statement.executeQuery(SQLString1);
             while (rs.next())
             {
                 emp = new Employees(rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getString(4),
-                        rs.getInt(5));
+                        rs.getString(5),
+                        rs.getInt(6));
                 empList.add(emp);
             }
 
         } catch (Exception e)
         {
-            System.out.println("Fail in DataMapper - getEmployeesBy");
+            System.out.println("Fail in DataMapper - getAllEmployeess");
             System.out.println(e.getMessage());
         } finally														// must close statement
         {
@@ -111,6 +113,7 @@ public class DataMapper
                 System.out.println(e.getMessage());
             }
         }
+        System.out.println( empList.toString());
         return empList;
     }
 
@@ -137,10 +140,10 @@ public class DataMapper
             while (rs.next())
             {
                 Rooms = new Rooms(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getInt(3),
-                        rs.getInt(4),
-                        rs.getInt(5)
+                        rs.getString(2)
+//                        rs.getInt(3),
+//                        rs.getInt(4),
+//                        rs.getInt(5)
                 );
                 RoomsList.add(Rooms);
 
@@ -170,20 +173,20 @@ public class DataMapper
         Rooms Rooms = null;
         String SQLString1 = // get order
                 "select * "
-                + "from Roomss ";
+                + "from Rooms ";
         PreparedStatement statement = null;
 
         try
         {
-
-            ResultSet rs = statement.executeQuery();
+            statement = con.prepareStatement(SQLString1);
+            ResultSet rs = statement.executeQuery(SQLString1);
             while (rs.next())
             {
                 Rooms = new Rooms(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getInt(3),
-                        rs.getInt(4),
-                        rs.getInt(5)
+                        rs.getString(2)
+//                        rs.getInt(3),
+//                        rs.getInt(4),
+//                        rs.getInt(5)
                 );
                 RoomsList.add(Rooms);
 
@@ -268,13 +271,13 @@ public class DataMapper
         Clients Clients = null;
         String SQLString1 = // get order
                 "select * "
-                + "from Clientss ";
+                + "from Clients ";
         PreparedStatement statement = null;
 
         try
         {
-
-            ResultSet rs = statement.executeQuery();
+            statement= con.prepareStatement(SQLString1);
+            ResultSet rs = statement.executeQuery(SQLString1);
             while (rs.next())
             {
                 Clients = new Clients(rs.getString(1),
@@ -333,11 +336,11 @@ public class DataMapper
             while (rs.next())
             {
                 Reservations = new Reservations(rs.getInt(1),
-                        rs.getBoolean(2),
+                        rs.getString(2),
                         rs.getInt(3),
                         rs.getInt(4),
-                        rs.getInt(5),
-                        rs.getString(6)
+                        rs.getInt(5)
+                       // rs.getString(6)
                 );
                 ReservationsList.add(Reservations);
 
@@ -367,21 +370,21 @@ public class DataMapper
         Reservations Reservations = null;
         String SQLString1 = // get order
                 "select * "
-                + "from Reservationss ";
+                + "from Reservations ";
         PreparedStatement statement = null;
 
         try
         {
-
-            ResultSet rs = statement.executeQuery();
+            statement = con.prepareStatement(SQLString1);
+            ResultSet rs = statement.executeQuery(SQLString1);
             while (rs.next())
             {
                 Reservations = new Reservations(rs.getInt(1),
-                        rs.getBoolean(2),
+                        rs.getString(2),
                         rs.getInt(3),
                         rs.getInt(4),
-                        rs.getInt(5),
-                        rs.getString(6)
+                        rs.getInt(5)
+                       // rs.getString(6)
                 );
                 ReservationsList.add(Reservations);
 
@@ -465,8 +468,8 @@ public class DataMapper
 
         try
         {
-
-            ResultSet rs = statement.executeQuery();
+            statement = con.prepareStatement(SQLString1);
+            ResultSet rs = statement.executeQuery(SQLString1);
             while (rs.next())
             {
                 Facilities = new Facilities(rs.getString(1),
