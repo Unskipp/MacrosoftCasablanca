@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Domain;
 
 /**
@@ -12,28 +11,21 @@ package Domain;
  */
 public class Clients
 {
-    private int id;
-    private String firstName,lastName,address,country,phone,email,travelAgency;
-    public Clients()
-    {
-        id=0;
-        firstName=null;
-        lastName=null;
-        address=null;
-        country=null;
-        phone=null;
-        email=null;
-        travelAgency=null;
-    }
 
-    public int getId()
-    {
-        return id;
-    }
+    private String id, firstName, lastName, address, country, phone, email, travelAgency, password;
 
-    public void setId(int id)
+    public Clients(String id, String firsName, String lastName, String address, String country, String travelAgency, String phone,
+            String email, String password)
     {
         this.id = id;
+        this.firstName = firsName;
+        this.lastName = lastName;
+        this.address = address;
+        this.country = country;
+        this.phone = phone;
+        this.email = email;
+        this.travelAgency = travelAgency;
+        this.password = password;
     }
 
     public String getFirstName()
@@ -105,5 +97,26 @@ public class Clients
     {
         this.travelAgency = travelAgency;
     }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
+    public String getId()
+    {
+        return id;
+    }
+
+    public void setId(String id)
+    {
+        this.id = id;
+    }
+
     
 }

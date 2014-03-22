@@ -12,17 +12,18 @@ package Domain;
  */
 public class Rooms
 {
-    private int id,price,capacity;
+    private int id,price,capacity,versionNumber;
     private String type;
-    
-    public Rooms()
-    {
-        id=0;
-        price=0;
-        capacity=0;
-        type=null;
-    }
 
+    public Rooms(int id, String type, int versionNumber, int price, int capacity)
+    {
+        this.id = id;
+        this.price = price;
+        this.capacity = capacity;
+        this.versionNumber = versionNumber;
+        this.type = type;
+    }
+    
     public int getId()
     {
         return id;
@@ -31,16 +32,6 @@ public class Rooms
     public void setId(int id)
     {
         this.id = id;
-    }
-
-    public String getType()
-    {
-        return type;
-    }
-
-    public void setType(String type)
-    {
-        this.type = type;
     }
 
     public int getPrice()
@@ -61,6 +52,26 @@ public class Rooms
     public void setCapacity(int capacity)
     {
         this.capacity = capacity;
+    }
+
+    public int getVersionNumber()
+    {
+        return versionNumber;
+    }
+
+    public void setVersionNumber(int versionNumber)
+    {
+        this.versionNumber = versionNumber;
+    }
+
+    public String getType()
+    {
+        return type;
+    }
+
+    public void setType(String type)
+    {
+        this.type = type;
     }
     
 }

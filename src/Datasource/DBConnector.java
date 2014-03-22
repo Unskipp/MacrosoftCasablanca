@@ -15,8 +15,8 @@ import java.sql.DriverManager;
 public class DBConnector
 {
     //INSERT THE USERNAME AND PASSWORD FOR THE DATABASE
-    private static String id = "cphsd62";
-    private static String pw = "cphsd62";
+    private static String id = "SEM2_GR22";
+    private static String pw = "SEM2_GR22";
 
     public Connection getConnection()
     {

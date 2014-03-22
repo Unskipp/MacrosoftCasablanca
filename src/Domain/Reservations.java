@@ -12,19 +12,41 @@ package Domain;
  */
 public class Reservations
 {
-    private int id,amountPayed,deposit,clientID,duration;
+    private int id,amountPayed,deposit,versionNumber;
+    private String clientID;
     private boolean payed;
-    //DATE ??? 
-    public Reservations()
+
+    //DATE ???
+    public Reservations(int id, boolean payed,int deposit, int amountPayed,  int versionNumber, String clientID)
     {
-        id=0;
-        amountPayed=0;
-        deposit=0;
-        clientID=0;
-        duration=0;
-        payed=false;
+        this.id = id;
+        this.amountPayed = amountPayed;
+        this.deposit = deposit;
+        this.versionNumber = versionNumber;
+        this.clientID = clientID;
+        this.payed = payed;
     }
 
+    public int getVersionNumber()
+    {
+        return versionNumber;
+    }
+
+    public void setVersionNumber(int versionNumber)
+    {
+        this.versionNumber = versionNumber;
+    }
+
+    public String getClientID()
+    {
+        return clientID;
+    }
+
+    public void setClientID(String clientID)
+    {
+        this.clientID = clientID;
+    }
+    
     public int getId()
     {
         return id;
@@ -53,26 +75,6 @@ public class Reservations
     public void setDeposit(int deposit)
     {
         this.deposit = deposit;
-    }
-
-    public int getClientID()
-    {
-        return clientID;
-    }
-
-    public void setClientID(int clientID)
-    {
-        this.clientID = clientID;
-    }
-
-    public int getDuration()
-    {
-        return duration;
-    }
-
-    public void setDuration(int duration)
-    {
-        this.duration = duration;
     }
 
     public boolean isPayed()

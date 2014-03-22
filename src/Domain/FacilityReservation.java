@@ -12,43 +12,45 @@ package Domain;
  */
 public class FacilityReservation
 {
-    private int facID,clientID,duration;
+    private String clientID,facilityName;
+    private int versionNumber;
+
+    public FacilityReservation(String clientID, String facilityName, int versionNumber)
+    {
+        this.clientID = clientID;
+        this.facilityName = facilityName;
+        this.versionNumber = versionNumber;
+    }
     
-    public FacilityReservation()
-    {
-        facID=0;
-        clientID=0;
-        duration=0;
-    }
-
-    public int getFacID()
-    {
-        return facID;
-    }
-
-    public void setFacID(int facID)
-    {
-        this.facID = facID;
-    }
-
-    public int getClientID()
+    public String getClientID()
     {
         return clientID;
     }
 
-    public void setClientID(int clientID)
+    public void setClientID(String clientID)
     {
         this.clientID = clientID;
     }
 
-    public int getDuration()
+    public String getFacilityName()
     {
-        return duration;
+        return facilityName;
     }
 
-    public void setDuration(int duration)
+    public void setFacilityName(String facilityName)
     {
-        this.duration = duration;
+        this.facilityName = facilityName;
     }
+
+    public int getVersionNumber()
+    {
+        return versionNumber;
+    }
+
+    public void setVersionNumber(int versionNumber)
+    {
+        this.versionNumber = versionNumber;
+    }
+    
     
 }

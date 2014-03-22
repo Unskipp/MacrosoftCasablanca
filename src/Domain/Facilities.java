@@ -12,32 +12,55 @@ package Domain;
  */
 public class Facilities
 {
-    private int id;
-    private String type;
-    public Facilities()
+    private int price,versionNumber;
+    private String name,description;
+    
+    public Facilities(String name, String description, int price, int versionNumber)
     {
-        id=0;
-        type=null;
+        this.name=name;
+        this.description=description;
+        this.price=price;
+        this.versionNumber=versionNumber;
     }
 
-    public int getId()
+    public int getPrice()
     {
-        return id;
+        return price;
     }
 
-    public void setId(int id)
+    public void setPrice(int price)
     {
-        this.id = id;
+        this.price = price;
     }
 
-    public String getType()
+    public int getVersionNumber()
     {
-        return type;
+        return versionNumber;
     }
 
-    public void setType(String type)
+    public void setVersionNumber(int versionNumber)
     {
-        this.type = type;
+        this.versionNumber = versionNumber;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
     }
     
     

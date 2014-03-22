@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Domain;
 
 /**
@@ -12,12 +11,18 @@ package Domain;
  */
 public class Employees
 {
-    private String firstName, lastName, position;
-    public Employees()
+
+    int  versionNumber;
+    private String id, firstName, lastName, position, password;
+
+    public Employees(String id, String firstName, String lastName, String position, String password, int versionNumber)
     {
-        firstName=null;
-        lastName=null;
-        position=null;
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.position = position;
+        this.password = password;
+        this.versionNumber = versionNumber;
     }
 
     public String getFirstName()
@@ -49,5 +54,37 @@ public class Employees
     {
         this.position = position;
     }
+
+    public int getVersionNumber()
+    {
+        return versionNumber;
+    }
+
+    public void setVersionNumber(int versionNumber)
+    {
+        this.versionNumber = versionNumber;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
+    public String getId()
+    {
+        return id;
+    }
+
+    public void setId(String id)
+    {
+        this.id = id;
+    }
     
+    
+
 }
