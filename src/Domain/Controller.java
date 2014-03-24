@@ -122,7 +122,7 @@ public class Controller
     {
 
         boolean result = false;
-
+        boolean found = false;
         for (int i = 0; i < roomsList.size(); i++)
         {
             if (roomsList.get(i).getType().equals(roomType))
@@ -131,6 +131,7 @@ public class Controller
                 {
                     if (roomsList.get(i).getId() == reservationsList.get(j).getRoomID())
                     {
+                        found=true;
                         if (from.compareTo(reservationsList.get(j).getUntilDate()) == 1 || until.compareTo(reservationsList.get(j).getFromDate()) == -1)
                         {
                             result = true;
@@ -139,6 +140,7 @@ public class Controller
                 }
             }
         }
+        if (found==false) result = true;
         return result;
     }
 
