@@ -5,12 +5,16 @@
  */
 package Datasource;
 
-import Domain.Clients;
-import Domain.Employees;
-import Domain.Facilities;
+
+import Domain.Client;
+import Domain.Employee;
+import Domain.Facility;
 import Domain.FacilityReservation;
-import Domain.Reservations;
-import Domain.Rooms;
+import Domain.Reservation;
+import Domain.Room;
+
+
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,10 +29,10 @@ import java.util.ArrayList;
 public class DataMapper
 {
 
-    public ArrayList<Employees> getEmployeessBy(Connection con, String searchCriteria, String value)
+    public ArrayList<Employee> getEmployeessBy(Connection con, String searchCriteria, String value)
     {
-        ArrayList<Employees> empList = new ArrayList<>();
-        Employees emp = null;
+        ArrayList<Employee> empList = new ArrayList<>();
+        Employee emp = null;
         String SQLString1 = // get order
                 "select * "
                 + "from Employeess "
@@ -43,7 +47,7 @@ public class DataMapper
             ResultSet rs = statement.executeQuery();
             while (rs.next())
             {
-                emp = new Employees(rs.getString(1),
+                emp = new Employee(rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
@@ -71,10 +75,10 @@ public class DataMapper
         return empList;
     }
 
-    public ArrayList<Employees> getAllEmployeess(Connection con)
+    public ArrayList<Employee> getAllEmployeess(Connection con)
     {
-        ArrayList<Employees> empList = new ArrayList<>();
-        Employees emp = null;
+        ArrayList<Employee> empList = new ArrayList<>();
+        Employee emp = null;
         String SQLString1 = // get order
                 "select * "
                 + "from Employees ";
@@ -86,7 +90,7 @@ public class DataMapper
             ResultSet rs = statement.executeQuery(SQLString1);
             while (rs.next())
             {
-                emp = new Employees(rs.getString(1),
+                emp = new Employee(rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
@@ -114,10 +118,10 @@ public class DataMapper
         return empList;
     }
 
-    public ArrayList<Rooms> getRoomssBy(Connection con, String searchCriteria, String value)
+    public ArrayList<Room> getRoomssBy(Connection con, String searchCriteria, String value)
     {
-        ArrayList<Rooms> RoomsList = new ArrayList<>();
-        Rooms Rooms = null;
+        ArrayList<Room> RoomsList = new ArrayList<>();
+        Room Rooms = null;
         String SQLString1 = // get order
                 "select * "
                 + "from Rooms "
@@ -136,7 +140,7 @@ public class DataMapper
             ResultSet rs = statement.executeQuery();
             while (rs.next())
             {
-                Rooms = new Rooms(rs.getInt(1),
+                Rooms = new Room(rs.getInt(1),
                         rs.getString(2) //                        rs.getInt(3),
                         //                      rs.getInt(4),
                         //                        rs.getInt(5)
@@ -163,10 +167,10 @@ public class DataMapper
         return RoomsList;
     }
 
-    public ArrayList<Rooms> getAllRoomss(Connection con)
+    public ArrayList<Room> getAllRoomss(Connection con)
     {
-        ArrayList<Rooms> RoomsList = new ArrayList<>();
-        Rooms Rooms = null;
+        ArrayList<Room> RoomsList = new ArrayList<>();
+        Room Rooms = null;
         String SQLString1 = // get order
                 "select * "
                 + "from Rooms ";
@@ -178,7 +182,7 @@ public class DataMapper
             ResultSet rs = statement.executeQuery(SQLString1);
             while (rs.next())
             {
-                Rooms = new Rooms(rs.getInt(1),
+                Rooms = new Room(rs.getInt(1),
                         rs.getString(2) //                        rs.getInt(3),
                         //                        rs.getInt(4),
                         //                        rs.getInt(5)
@@ -259,10 +263,10 @@ public class DataMapper
         return ClientsList;
     }
 
-    public ArrayList<Clients> getAllClientss(Connection con)
+    public ArrayList<Client> getAllClientss(Connection con)
     {
-        ArrayList<Clients> ClientsList = new ArrayList<>();
-        Clients Clients = null;
+        ArrayList<Client> clientsList = new ArrayList<>();
+        Client client = null;
         String SQLString1 = // get order
                 "select * "
                 + "from Clients ";
@@ -274,7 +278,7 @@ public class DataMapper
             ResultSet rs = statement.executeQuery(SQLString1);
             while (rs.next())
             {
-                Clients = new Clients(rs.getString(1),
+                client = new Client(rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
@@ -284,7 +288,7 @@ public class DataMapper
                         rs.getString(8),
                         rs.getString(9),
                         rs.getInt(10));
-                ClientsList.add(Clients);
+                clientsList.add(client);
 
             }
 
@@ -303,22 +307,19 @@ public class DataMapper
                 System.out.println(e.getMessage());
             }
         }
-        return ClientsList;
+        return clientsList;
     }
 
-    public ArrayList<Reservations> getReservationssBy(Connection con, String searchCriteria, String value)
+    public ArrayList<Reservation> getReservationssBy(Connection con, String searchCriteria, String value)
     {
-        ArrayList<Reservations> ReservationsList = new ArrayList<>();
+        ArrayList<Reservation> reservationsList = new ArrayList<>();
         
-        Reservations Reservations = null;
+        Reservation reservation = null;
         String SQLString1 = // get order
-                "select c.id, c.first_name, c.last_name, r.id, r.payed, r.deposit, r.amount_payed, rr.starting_date, rr.ending_date, room.id, room.type, rt.capacity"
+                "select   r.*, c.id"
                 + "from  clients c join clients_reservations cr on c.id = cr.client_id"
                 + "join reservations r on cr.res_id = r.id"
-                + "join room_reservations rr on r.id = rr.res_id"
-                + "join rooms room on rr.room_id = room.id"
-                + "join room_types rt on room.type = rt.type"
-                + "where c.first_name = "+ searchCriteria+ "=?";
+                + "where"+ searchCriteria+ "=?";
         PreparedStatement statement = null;
 
         try
@@ -334,18 +335,15 @@ public class DataMapper
             while (rs.next())
             {
                 
-                Reservations = new Reservations(rs.getString(1),
+                reservation = new Reservation(rs.getInt(1),
                         rs.getString(2),
-                        rs.getString(3),
+                        rs.getInt(3),
                         rs.getInt(4),
-                        rs.getString(5),
-                        rs.getInt(6),
-                        rs.getInt(7),
-                        rs.getInt(8),
-                        rs.getString(9),
-                        rs.getInt(10)
+                        rs.getInt(5),
+                        rs.getString(6)
+                        
                         );
-                ReservationsList.add(Reservations);
+                reservationsList.add(reservation);
 
             }
 
@@ -364,20 +362,18 @@ public class DataMapper
                 System.out.println(e.getMessage());
             }
         }
-        return ReservationsList;
+        return reservationsList;
     }
 
-    public ArrayList<Reservations> getAllReservationss(Connection con)
+    public ArrayList<Reservation> getAllReservationss(Connection con)
     {
-        ArrayList<Reservations> ReservationsList = new ArrayList<>();
-        Reservations Reservations = null;
+        ArrayList<Reservation> ReservationsList = new ArrayList<>();
+        Reservation reservation = null;
         String SQLString1 = // get order
-                "select c.id, c.first_name, c.last_name, r.id, r.payed, r.deposit, r.amount_payed, rr.starting_date, rr.ending_date, room.id, room.type, rt.capacity"
+                "select   r.*, c.id"
                 + "from  clients c join clients_reservations cr on c.id = cr.client_id"
                 + "join reservations r on cr.res_id = r.id"
-                + "join room_reservations rr on r.id = rr.res_id"
-                + "join rooms room on rr.room_id = room.id"
-                + "join room_types rt on room.type = rt.type";
+              ;
         PreparedStatement statement = null;
 
         try
@@ -386,18 +382,15 @@ public class DataMapper
             ResultSet rs = statement.executeQuery(SQLString1);
             while (rs.next())
             {
-                Reservations = new Reservations(rs.getString(1),
+                 reservation = new Reservation(rs.getInt(1),
                         rs.getString(2),
-                        rs.getString(3),
+                        rs.getInt(3),
                         rs.getInt(4),
-                        rs.getString(5),
-                        rs.getInt(6),
-                        rs.getInt(7),
-                        rs.getInt(8),
-                        rs.getString(9),
-                        rs.getInt(10)
+                        rs.getInt(5),
+                        rs.getString(6)
+                        
                         );
-                ReservationsList.add(Reservations);
+                ReservationsList.add(reservation);
 
             }
 
@@ -419,10 +412,10 @@ public class DataMapper
         return ReservationsList;
     }
 
-    public ArrayList<Facilities> getFacilitiesBy(Connection con, String searchCriteria, String value)
+    public ArrayList<Facility> getFacilitiesBy(Connection con, String searchCriteria, String value)
     {
-        ArrayList<Facilities> FacilitiesList = new ArrayList<>();
-        Facilities Facilities = null;
+        ArrayList<Facility> facilitiesList = new ArrayList<>();
+        Facility facility = null;
         String SQLString1 = // get order
                 "select * "
                 + "from facilities "
@@ -441,11 +434,11 @@ public class DataMapper
             ResultSet rs = statement.executeQuery();
             while (rs.next())
             {
-                Facilities = new Facilities(rs.getString(1),
+                facility = new Facility(rs.getString(1),
                         rs.getString(2),
                         rs.getInt(3),
                         rs.getInt(4));
-                FacilitiesList.add(Facilities);
+                facilitiesList.add(facility);
 
             }
 
@@ -464,13 +457,13 @@ public class DataMapper
                 System.out.println(e.getMessage());
             }
         }
-        return FacilitiesList;
+        return facilitiesList;
     }
 
-    public ArrayList<Facilities> getAllFacilities(Connection con)
+    public ArrayList<Facility> getAllFacilities(Connection con)
     {
-        ArrayList<Facilities> FacilitiesList = new ArrayList<>();
-        Facilities Facilities = null;
+        ArrayList<Facility> facilitiesList = new ArrayList<>();
+        Facility facility = null;
         String SQLString1 = // get order
                 "select * "
                 + "from facilities ";
@@ -482,11 +475,11 @@ public class DataMapper
             ResultSet rs = statement.executeQuery(SQLString1);
             while (rs.next())
             {
-                Facilities = new Facilities(rs.getString(1),
+                facility = new Facility(rs.getString(1),
                         rs.getString(2),
                         rs.getInt(3),
                         rs.getInt(4));
-                FacilitiesList.add(Facilities);
+                facilitiesList.add(facility);
 
             }
 
@@ -505,10 +498,10 @@ public class DataMapper
                 System.out.println(e.getMessage());
             }
         }
-        return FacilitiesList;
+        return facilitiesList;
     }
 
-    public boolean saveNewReservation(Reservations reservation, Rooms room, Clients client, Connection con)
+    public boolean saveNewReservation(Reservation reservation, Room room, Client client, Connection con)
     {
         int rowsInsertedInReservations = 0;
         int rowsInsertedInRoomReservations = 0;
@@ -590,7 +583,7 @@ public class DataMapper
     public ArrayList<FacilityReservation> getFacilitiyReservationsBy(Connection con, String searchCriteria, String value)
     {
         ArrayList<FacilityReservation> FacilityResList = new ArrayList<>();
-        FacilityReservation FacilityRes = null;
+        FacilityReservation facilityRes = null;
         String SQLString1 = // get order
                 "select * "
                 + "from facilities_reservations "
@@ -604,12 +597,12 @@ public class DataMapper
             ResultSet rs = statement.executeQuery();
             while (rs.next())
             {
-                FacilityRes = new FacilityRes(rs.getString(1),
+                facilityRes = new FacilityRes(rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getInt(5));
-                FacilityResList.add(FacilityRes);
+                FacilityResList.add(facilityRes);
 
             }
 
