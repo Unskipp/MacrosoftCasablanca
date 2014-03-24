@@ -315,9 +315,10 @@ public class DataMapper
         
         Reservation reservation = null;
         String SQLString1 = // get order
-                "select   r.*, c.id"
-                + "from  clients c join clients_reservations cr on c.id = cr.client_id"
-                + "join reservations r on cr.res_id = r.id"
+                "select   r.*, c.id, rr.starting_date, rr.ending_date "
+                + "from  clients c join clients_reservations cr on c.id = cr.client_id "
+                + "join reservations r on cr.res_id = r.id "
+                + "join room_reservations rr on rr.res_id = r.id "
                 + "where"+ searchCriteria+ "=?";
         PreparedStatement statement = null;
 
@@ -339,7 +340,9 @@ public class DataMapper
                         rs.getInt(3),
                         rs.getInt(4),
                         rs.getInt(5),
-                        rs.getString(6)
+                        rs.getString(6),
+                        rs.getDate(7),
+                        rs.getDate(8)
                         
                         );
                 reservationsList.add(reservation);
@@ -369,9 +372,10 @@ public class DataMapper
         ArrayList<Reservation> reservationsList = new ArrayList<>();
         Reservation reservation = null;
         String SQLString1 = // get order
-                "select   r.*, c.id "
+                "select   r.*, c.id, rr.starting_date, rr.ending_date "
                 + "from  clients c join clients_reservations cr on c.id = cr.client_id "
-                + "join reservations r on cr.res_id = r.id"
+                + "join reservations r on cr.res_id = r.id "
+                + "join room_reservations rr on rr.res_id = r.id"
               ;
         PreparedStatement statement = null;
 
@@ -386,7 +390,9 @@ public class DataMapper
                         rs.getInt(3),
                         rs.getInt(4),
                         rs.getInt(5),
-                        rs.getString(6)
+                        rs.getString(6),
+                        rs.getDate(7),
+                        rs.getDate(8)
                         
                         );
                 reservationsList.add(reservation);
