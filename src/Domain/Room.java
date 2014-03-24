@@ -13,9 +13,9 @@ package Domain;
 public class Room
 {
     private int id, versionNumber;
-    private String type;
+    private int type;
 
-    public Room(int id, String type , int versionNumber)
+    public Room(int id, int type , int versionNumber)
     {
         this.id = id;
         this.versionNumber = versionNumber;
@@ -42,12 +42,12 @@ public class Room
         this.versionNumber = versionNumber;
     }
 
-    public String getType()
+    public int getType()
     {
         return type;
     }
 
-    public void setType(String type)
+    public void setType(int type)
     {
         this.type = type;
     }

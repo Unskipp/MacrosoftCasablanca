@@ -11,6 +11,7 @@ import Domain.Facility;
 import Domain.FacilityReservation;
 import Domain.Reservation;
 import Domain.Room;
+import Domain.RoomType;
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -98,5 +99,9 @@ public class DBFacade
     public ArrayList<FacilityReservation> getFacilityReservationsBy(String searchCriteria, String value)
     {
         return map.getFacilityReservationsBy(connection, searchCriteria, value);
+    }
+    public ArrayList<RoomType> getAllRoomTypes()
+    {
+        return map.getAllRoomTypes(connection);
     }
 }

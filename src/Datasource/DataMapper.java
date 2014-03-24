@@ -12,6 +12,7 @@ import Domain.Facility;
 import Domain.FacilityReservation;
 import Domain.Reservation;
 import Domain.Room;
+import Domain.RoomType;
 
 
 
@@ -123,8 +124,8 @@ public class DataMapper
         ArrayList<Room> roomsList = new ArrayList<>();
         Room room = null;
         String SQLString1 = // get order
-                "select r.*, rt.price, rt.capacity  "
-                + "from rooms r join room_types rt on r.type = rt.type "
+                "select *  "
+                + "from rooms "
                 + "where" + searchCriteria + "= ?";
         PreparedStatement statement = null;
 
@@ -141,10 +142,8 @@ public class DataMapper
             while (rs.next())
             {
                 room = new Room(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getInt(3),
-                        rs.getInt(4),
-                        rs.getInt(5)
+                        rs.getInt(2),
+                        rs.getInt(3)
                         );
                 roomsList.add(room);
 
@@ -173,8 +172,8 @@ public class DataMapper
         ArrayList<Room> roomsList = new ArrayList<>();
         Room room = null;
         String SQLString1 = // get order
-                "select r.*, rt.price, rt.capacity  "
-                + "from rooms r join room_types rt on r.type = rt.type";
+                "select *  "
+                + "from rooms ";
         PreparedStatement statement = null;
 
         try
@@ -184,10 +183,8 @@ public class DataMapper
             while (rs.next())
             {
                 room = new Room(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getInt(3),
-                        rs.getInt(4),
-                        rs.getInt(5)
+                        rs.getInt(2),
+                        rs.getInt(3)
                         );
                 roomsList.add(room);
 
@@ -217,7 +214,7 @@ public class DataMapper
         Client Clients = null;
         String SQLString1 = // get order
                 "select * "
-                + "from Clientss "
+                + "from Clients "
                 + "where" + searchCriteria + "= ?";
         PreparedStatement statement = null;
 
@@ -369,7 +366,7 @@ public class DataMapper
 
     public ArrayList<Reservation> getAllReservationss(Connection con)
     {
-        ArrayList<Reservation> ReservationsList = new ArrayList<>();
+        ArrayList<Reservation> reservationsList = new ArrayList<>();
         Reservation reservation = null;
         String SQLString1 = // get order
                 "select   r.*, c.id "
@@ -392,7 +389,7 @@ public class DataMapper
                         rs.getString(6)
                         
                         );
-                ReservationsList.add(reservation);
+                reservationsList.add(reservation);
 
             }
 
@@ -411,7 +408,7 @@ public class DataMapper
                 System.out.println(e.getMessage());
             }
         }
-        return ReservationsList;
+        return reservationsList;
     }
 
     public ArrayList<Facility> getFacilitiesBy(Connection con, String searchCriteria, String value)
@@ -446,7 +443,7 @@ public class DataMapper
 
         } catch (Exception e)
         {
-            System.out.println("Fail in DataMapper - getReservationsBy");
+            System.out.println("Fail in DataMapper - getFacilitiesBy");
             System.out.println(e.getMessage());
         } finally														// must close statement
         {
@@ -543,10 +540,10 @@ public class DataMapper
             
              statement = con.prepareStatement(SQLString3);
             statement.setInt(1, room.getId());
-            statement.setString(2, room.getType());
+            statement.setInt(2, room.getType());
             
             statement = con.prepareStatement(SQLString1);
-            statement.setInt(1, reservation.getRoomId());
+            statement.setInt(1, reservation.getId());
             statement.setString(2, reservation.getPayed());
             statement.setInt(3, reservation.getDeposit());
             statement.setInt(4, reservation.getAmountPayed());
@@ -554,15 +551,15 @@ public class DataMapper
             rowsInsertedInReservations = statement.executeUpdate();
 
             statement = con.prepareStatement(SQLString2);
-            statement.setInt(1, reservation.getRoomId());
-            statement.setInt(2, reservation.getRoomId());
+            statement.setInt(1, reservation.getId());
+            statement.setInt(2, room.getId());
             statement.setString(3, "10-08-2013" );
             statement.setString(4, "12-08-2013" );
             statement.setInt(5, reservation.getVersionNumber());
             rowsInsertedInRoomReservations = statement.executeUpdate();
 
             statement = con.prepareStatement(SQLString4);
-            statement.setInt(1, reservation.getRoomId());
+            statement.setInt(1, reservation.getId());
             statement.setString(2, client.getId());
 
             
@@ -586,7 +583,7 @@ public class DataMapper
 
     public ArrayList<FacilityReservation> getFacilityReservationsBy(Connection con, String searchCriteria, String value)
     {
-        ArrayList<FacilityReservation> FacilityResList = new ArrayList<>();
+        ArrayList<FacilityReservation> facilityResList = new ArrayList<>();
         FacilityReservation facilityRes = null;
         String SQLString1 = // get order
                 "select * "
@@ -606,13 +603,13 @@ public class DataMapper
                         rs.getString(3),
                         rs.getString(4),
                         rs.getInt(5));
-                FacilityResList.add(facilityRes);
+                facilityResList.add(facilityRes);
 
             }
 
         } catch (Exception e)
         {
-            System.out.println("Fail in DataMapper - getReservationsBy");
+            System.out.println("Fail in DataMapper - getFacilityReservationsBy");
             System.out.println(e.getMessage());
         } finally														// must close statement
         {
@@ -621,10 +618,51 @@ public class DataMapper
                 statement.close();
             } catch (SQLException e)
             {
-                System.out.println("Fail in DataMapper - getFacilitiesBy");
+                System.out.println("Fail in DataMapper - getFacilityReservationsBy");
                 System.out.println(e.getMessage());
             }
         }
-        return FacilityResList;
+        return facilityResList;
+    }
+    
+    public ArrayList<RoomType> getAllRoomTypes(Connection con)
+    {
+        ArrayList<RoomType> roomTypesList = new ArrayList<>();
+        RoomType roomType = null;
+        String SQLString1 = // get order
+                "select * "
+                + "from room_types ";
+        PreparedStatement statement = null;
+
+        try
+        {
+            statement = con.prepareStatement(SQLString1);
+            ResultSet rs = statement.executeQuery(SQLString1);
+            while (rs.next())
+            {
+                roomType = new RoomType(rs.getInt(1),                        
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getInt(4));
+                roomTypesList.add(roomType);
+
+            }
+
+        } catch (Exception e)
+        {
+            System.out.println("Fail in DataMapper - getAllFacilities");
+            System.out.println(e.getMessage());
+        } finally														// must close statement
+        {
+            try
+            {
+                statement.close();
+            } catch (SQLException e)
+            {
+                System.out.println("Fail in DataMapper - getAllFacilities");
+                System.out.println(e.getMessage());
+            }
+        }
+        return roomTypesList;
     }
 }
