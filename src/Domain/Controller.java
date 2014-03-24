@@ -7,6 +7,7 @@ package Domain;
 
 import Datasource.DBFacade;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -83,6 +84,38 @@ public class Controller
             }
         }
         return model;
+    }
+
+    public DefaultComboBoxModel getAllroomsType()
+    {
+        roomsList = dbf.getAllRoomss();
+
+        Object o = new Object();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        
+        for(int i=0; i<roomsList.size();i++)
+        {
+            o=roomsList.get(i).getType().toString();
+            model.addElement(o);
+        }
+        
+        return model;
+    }
+    
+    public String returnDataAboutSelectedRoom(String typeOfRoom)
+    {
+        String result=null;
+        
+        for(int i=0;i<roomsList.size();i++)
+        {
+            if(roomsList.get(i).getType().equals(typeOfRoom))
+            {
+                result= "Room type: "+roomsList.get(i).getType()+"\nPrice per night: "+Integer.toString(roomsList.get(i).getPrice())+
+                        "\nCapacity: "+Integer.toString(roomsList.get(i).getCapacity())+"\nRoom Number: "+Integer.toString(roomsList.get(i).getId());
+            }
+        }
+        
+        return result;
     }
 
 }

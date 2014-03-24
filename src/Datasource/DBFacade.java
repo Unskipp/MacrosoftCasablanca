@@ -8,6 +8,7 @@ package Datasource;
 import Domain.Client;
 import Domain.Employee;
 import Domain.Facility;
+import Domain.FacilityReservation;
 import Domain.Reservation;
 import Domain.Room;
 import java.sql.Connection;
@@ -60,9 +61,9 @@ public class DBFacade
         return map.getAllRoomss(connection);
     }
 
-    public ArrayList<Client> getClientssBy(String searchCriteria, String value)
+    public ArrayList<Client> getClientssBy(String searchCriteria, String value,String clientID)
     {
-        return map.getClientssBy(connection, searchCriteria, value);
+        return map.getClientssBy(connection, searchCriteria, value,clientID);
     }
 
     public ArrayList<Client> getAllClientss()
@@ -88,5 +89,14 @@ public class DBFacade
     public ArrayList<Facility> getAllFacilities()
     {
         return map.getAllFacilities(connection);
+    }
+    
+    public boolean saveNewRoomReservation(Reservation reservation, Room room, Client client)
+    {
+        return map.saveNewRoomReservation(reservation, room, client, connection);
+    }
+    public ArrayList<FacilityReservation> getFacilityReservationsBy(String searchCriteria, String value)
+    {
+        return map.getFacilityReservationsBy(connection, searchCriteria, value);
     }
 }

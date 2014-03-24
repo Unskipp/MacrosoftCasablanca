@@ -29,6 +29,9 @@ public class Room extends javax.swing.JFrame
     {
         this();
         this.controller=controller;
+        jComboBoxRoomType.setModel(controller.getAllroomsType());
+        jTextAreaRoomInfo.setText(controller.returnDataAboutSelectedRoom(jComboBoxRoomType.getSelectedItem().toString()));
+        
     }
 
     /**
@@ -89,6 +92,13 @@ public class Room extends javax.swing.JFrame
         jLabel1.setText("Room type");
 
         jComboBoxRoomType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxRoomType.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
+                jComboBoxRoomTypeItemStateChanged(evt);
+            }
+        });
 
         jLabel2.setText("Booking period");
 
@@ -244,12 +254,10 @@ public class Room extends javax.swing.JFrame
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jButtonCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING))
@@ -265,7 +273,7 @@ public class Room extends javax.swing.JFrame
                                             .addComponent(jTextFieldRoomAssigned, javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jComboBoxDiscount, javax.swing.GroupLayout.Alignment.LEADING, 0, 96, Short.MAX_VALUE)
                                             .addComponent(jTextFieldFinalPrice, javax.swing.GroupLayout.Alignment.LEADING))
-                                        .addGap(147, 147, 147)
+                                        .addGap(144, 144, 144)
                                         .addComponent(jScrollPane1))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -395,6 +403,12 @@ public class Room extends javax.swing.JFrame
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jComboBoxRoomTypeItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_jComboBoxRoomTypeItemStateChanged
+    {//GEN-HEADEREND:event_jComboBoxRoomTypeItemStateChanged
+        // TODO add your handling code here:
+        jTextAreaRoomInfo.setText(controller.returnDataAboutSelectedRoom(jComboBoxRoomType.getSelectedItem().toString()));
+    }//GEN-LAST:event_jComboBoxRoomTypeItemStateChanged
 
     /**
      * @param args the command line arguments

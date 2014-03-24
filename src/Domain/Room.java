@@ -15,7 +15,7 @@ public class Room
     private int id,price,capacity,versionNumber;
     private String type;
 
-    public Room(int id, String type /*, int versionNumber, int price, int capacity*/)
+    public Room(int id, String type , int versionNumber, int price, int capacity)
     {
         this.id = id;
         this.price = price;
