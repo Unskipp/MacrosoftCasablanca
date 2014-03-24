@@ -12,14 +12,14 @@ package Domain;
  */
 public class Reservation
 {
-    private int roomId,amountPayed,deposit,versionNumber;
+    private int amountPayed,deposit,versionNumber, id;
     private String clientID;
     private String payed;
 
     //DATE ???
     public Reservation(int id, String payed,int deposit, int amountPayed,  int versionNumber,String clientID)
     {
-        this.roomId = id;
+        this.id = id;
         this.amountPayed = amountPayed;
         this.deposit = deposit;
         this.versionNumber = versionNumber;
@@ -47,14 +47,14 @@ public class Reservation
         this.clientID = clientID;
     }
     
-    public int getRoomId()
+    public int getId()
     {
-        return roomId;
+        return id;
     }
 
-    public void setRoomId(int id)
+    public void setId(int id)
     {
-        this.roomId = id;
+        this.id = id;
     }
 
     public int getAmountPayed()
