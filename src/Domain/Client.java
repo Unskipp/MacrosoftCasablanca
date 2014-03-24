@@ -13,7 +13,7 @@ public class Client
 {
 
     private String id, firstName, lastName, address, country, email, travelAgency, password;
-    int phone,versionNumber;
+    private int phone,versionNumber;
 
     public Client(String id, String firsName, String lastName, String address, String country, String travelAgency, int phone,
             String email, String password,int versionNumber)

@@ -12,7 +12,7 @@ package Domain;
 public class Employee
 {
 
-    int  versionNumber;
+    private int  versionNumber;
     private String id, firstName, lastName, position, password;
 
     public Employee()

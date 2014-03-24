@@ -312,10 +312,9 @@ public class DataMapper
     public ArrayList<Reservation> getReservationssBy(Connection con, String searchCriteria, String value)
     {
         ArrayList<Reservation> reservationsList = new ArrayList<>();
-        
         Reservation reservation = null;
         String SQLString1 = // get order
-                "select   r.*, c.id, rr.starting_date, rr.ending_date "
+                "select   r.*, c.id, rr.starting_date, rr.ending_date,rr.room_id "
                 + "from  clients c join clients_reservations cr on c.id = cr.client_id "
                 + "join reservations r on cr.res_id = r.id "
                 + "join room_reservations rr on rr.res_id = r.id "
@@ -342,8 +341,8 @@ public class DataMapper
                         rs.getInt(5),
                         rs.getString(6),
                         rs.getDate(7),
-                        rs.getDate(8)
-                        
+                        rs.getDate(8),
+                        rs.getInt(9)
                         );
                 reservationsList.add(reservation);
 
@@ -372,7 +371,7 @@ public class DataMapper
         ArrayList<Reservation> reservationsList = new ArrayList<>();
         Reservation reservation = null;
         String SQLString1 = // get order
-                "select   r.*, c.id, rr.starting_date, rr.ending_date "
+                "select   r.*, c.id, rr.starting_date, rr.ending_date,rr.room_id "
                 + "from  clients c join clients_reservations cr on c.id = cr.client_id "
                 + "join reservations r on cr.res_id = r.id "
                 + "join room_reservations rr on rr.res_id = r.id"
@@ -392,7 +391,8 @@ public class DataMapper
                         rs.getInt(5),
                         rs.getString(6),
                         rs.getDate(7),
-                        rs.getDate(8)
+                        rs.getDate(8),
+                         rs.getInt(9)
                         
                         );
                 reservationsList.add(reservation);

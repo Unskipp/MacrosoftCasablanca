@@ -6,18 +6,22 @@
 
 package Domain;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 /**
  *
  * @author Unskipp
  */
 public class Reservation
 {
-    private int amountPayed,deposit,versionNumber, id;
+    private int amountPayed,deposit,versionNumber, id,roomID;
     private String clientID;
     private String payed;
+    private Calendar fromDate,untilDate;
 
     //DATE ???
-    public Reservation(int id, String payed,int deposit, int amountPayed,  int versionNumber,String clientID)
+    public Reservation(int id, String payed,int deposit, int amountPayed,  int versionNumber,String clientID,Date fromDate,Date untilDate,int roomID)
     {
         this.id = id;
         this.amountPayed = amountPayed;
@@ -25,6 +29,21 @@ public class Reservation
         this.versionNumber = versionNumber;
         this.clientID = clientID;
         this.payed = payed;
+        this.fromDate=Calendar.getInstance();
+        this.fromDate.setTime(fromDate);
+        this.untilDate=Calendar.getInstance();
+        this.untilDate.setTime(untilDate);
+        this.roomID=roomID;
+    }
+
+    public int getRoomID()
+    {
+        return roomID;
+    }
+
+    public void setRoomID(int roomID)
+    {
+        this.roomID = roomID;
     }
 
     public int getVersionNumber()
@@ -92,6 +111,24 @@ public class Reservation
     {
         return "Reservations{" + "clientID=" + clientID + '}';
     }
-    
-    
+
+    public Calendar getFromDate()
+    {
+        return fromDate;
+    }
+
+    public void setFromDate(Calendar fromDate)
+    {
+        this.fromDate = fromDate;
+    }
+
+    public Calendar getUntilDate()
+    {
+        return untilDate;
+    }
+
+    public void setUntilDate(Calendar untilDate)
+    {
+        this.untilDate = untilDate;
+    }
 }
