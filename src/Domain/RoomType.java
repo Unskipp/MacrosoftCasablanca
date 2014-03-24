@@ -13,9 +13,9 @@ package Domain;
 public class RoomType
 {
     String type;
-    int capacity, price;
+    int capacity, price, id;
 
-    public RoomType(String type, int capacity, int price)
+    public RoomType(int id, int price, String type, int capacity)
     {
         this.type = type;
         this.capacity = capacity;
