@@ -5,11 +5,11 @@
  */
 package Datasource;
 
-import Domain.Clients;
-import Domain.Employees;
-import Domain.Facilities;
-import Domain.Reservations;
-import Domain.Rooms;
+import Domain.Client;
+import Domain.Employee;
+import Domain.Facility;
+import Domain.Reservation;
+import Domain.Room;
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -40,52 +40,52 @@ public class DBFacade
     }
 
     //INSERT THE METHODS HERE
-    public ArrayList<Employees> getEmployeessBy(String searchCriteria, String value)
+    public ArrayList<Employee> getEmployeessBy(String searchCriteria, String value)
     {
         return map.getEmployeessBy(connection, searchCriteria, value);
     }
 
-    public ArrayList<Employees> getAllEmployeess()
+    public ArrayList<Employee> getAllEmployeess()
     {
         return map.getAllEmployeess(connection);
     }
 
-    public ArrayList<Rooms> getRoomssBy(String searchCriteria, String value)
+    public ArrayList<Room> getRoomssBy(String searchCriteria, String value)
     {
         return map.getRoomssBy(connection, searchCriteria, value);
     }
 
-    public ArrayList<Rooms> getAllRoomss()
+    public ArrayList<Room> getAllRoomss()
     {
         return map.getAllRoomss(connection);
     }
 
-    public ArrayList<Clients> getClientssBy(String searchCriteria, String value)
+    public ArrayList<Client> getClientssBy(String searchCriteria, String value)
     {
         return map.getClientssBy(connection, searchCriteria, value);
     }
 
-    public ArrayList<Clients> getAllClientss()
+    public ArrayList<Client> getAllClientss()
     {
         return map.getAllClientss(connection);
     }
 
-    public ArrayList<Reservations> getReservationssBy(String searchCriteria, String value)
+    public ArrayList<Reservation> getReservationssBy(String searchCriteria, String value)
     {
         return map.getReservationssBy(connection, searchCriteria, value);
     }
 
-    public ArrayList<Reservations> getAllReservationss()
+    public ArrayList<Reservation> getAllReservationss()
     {
         return map.getAllReservationss(connection);
     }
 
-    public ArrayList<Facilities> getFacilitiesBy(String searchCriteria, String value)
+    public ArrayList<Facility> getFacilitiesBy(String searchCriteria, String value)
     {
         return map.getFacilitiesBy(connection, searchCriteria, value);
     }
 
-    public ArrayList<Facilities> getAllFacilities()
+    public ArrayList<Facility> getAllFacilities()
     {
         return map.getAllFacilities(connection);
     }

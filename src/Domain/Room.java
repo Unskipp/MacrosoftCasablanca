@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -10,12 +10,12 @@ package Domain;
  *
  * @author Unskipp
  */
-public class Rooms
+public class Room
 {
     private int id,price,capacity,versionNumber;
     private String type;
 
-    public Rooms(int id, String type, int versionNumber, int price, int capacity)
+    public Room(int id, String type /*, int versionNumber, int price, int capacity*/)
     {
         this.id = id;
         this.price = price;
@@ -73,5 +73,12 @@ public class Rooms
     {
         this.type = type;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Rooms{" + "type=" + type + '}';
+    }
+    
     
 }

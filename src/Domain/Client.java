@@ -9,13 +9,13 @@ package Domain;
  *
  * @author Unskipp
  */
-public class Clients
+public class Client
 {
 
     private String id, firstName, lastName, address, country, email, travelAgency, password;
     int phone,versionNumber;
 
-    public Clients(String id, String firsName, String lastName, String address, String country, String travelAgency, int phone,
+    public Client(String id, String firsName, String lastName, String address, String country, String travelAgency, int phone,
             String email, String password,int versionNumber)
     {
         this.id = id;
@@ -130,5 +130,12 @@ public class Clients
         this.versionNumber = versionNumber;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Clients{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + '}';
+    }
+
+    
     
 }

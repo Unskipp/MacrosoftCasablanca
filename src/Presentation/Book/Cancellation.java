@@ -52,7 +52,7 @@ public class Cancellation extends javax.swing.JFrame
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuRooms = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -94,8 +94,15 @@ public class Cancellation extends javax.swing.JFrame
 
         jMenu3.setText("Book");
 
-        jMenuItem1.setText("Room");
-        jMenu3.add(jMenuItem1);
+        jMenuRooms.setText("Room");
+        jMenuRooms.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuRoomsActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuRooms);
 
         jMenuItem2.setText("Facilities");
         jMenu3.add(jMenuItem2);
@@ -220,37 +227,27 @@ public class Cancellation extends javax.swing.JFrame
 
     private void jMenuRommsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuRommsActionPerformed
     {//GEN-HEADEREND:event_jMenuRommsActionPerformed
-        RoomList frame = new RoomList(controller);
-        frame.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_jMenuRommsActionPerformed
 
     private void jMenuClientsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuClientsActionPerformed
     {//GEN-HEADEREND:event_jMenuClientsActionPerformed
-        ClientList frame = new ClientList(controller);
-        frame.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_jMenuClientsActionPerformed
 
     private void jMenuFacilitiesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuFacilitiesActionPerformed
     {//GEN-HEADEREND:event_jMenuFacilitiesActionPerformed
-        FacilityList frame = new FacilityList(controller);
-        frame.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_jMenuFacilitiesActionPerformed
 
     private void jMenuEmployeesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuEmployeesActionPerformed
     {//GEN-HEADEREND:event_jMenuEmployeesActionPerformed
-        EmployeesList frame = new EmployeesList(controller);
-        frame.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_jMenuEmployeesActionPerformed
 
     private void jMenuReservationsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuReservationsActionPerformed
     {//GEN-HEADEREND:event_jMenuReservationsActionPerformed
-        ReservationList frame = new ReservationList(controller);
-        frame.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_jMenuReservationsActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -260,6 +257,13 @@ public class Cancellation extends javax.swing.JFrame
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuRoomsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuRoomsActionPerformed
+    {//GEN-HEADEREND:event_jMenuRoomsActionPerformed
+       Room frame = new Room(controller);
+        frame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuRoomsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -320,11 +324,11 @@ public class Cancellation extends javax.swing.JFrame
     private javax.swing.JMenuItem jMenuClients;
     private javax.swing.JMenuItem jMenuEmployees;
     private javax.swing.JMenuItem jMenuFacilities;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuReservations;
     private javax.swing.JMenuItem jMenuRomms;
+    private javax.swing.JMenuItem jMenuRooms;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextFieldSearch;
     // End of variables declaration//GEN-END:variables

@@ -7,31 +7,40 @@
 package Presentation.ListFrames;
 
 import Domain.Controller;
+import Presentation.MainPage;
 import Presentation.Book.Cancellation;
 import Presentation.Book.Room;
-import Presentation.MainPage;
+
 
 /**
  *
  * @author Unskipp
  */
-public class EmployeesList extends javax.swing.JFrame
+public class ListFrames extends javax.swing.JFrame
 {
 
     /**
-     * Creates new form Employees
+     * Creates new form ListFrames
      */
-    Controller controller;
-    public EmployeesList()
+    private  Controller controller;
+    public ListFrames()
     {
         initComponents();
+        
     }
     
-    public EmployeesList(Controller controller)
+    public ListFrames(Controller controller,String frame)
     {
         this();
         this.controller=controller;
+        
+        if(frame.equals("Employees")) jList2.setModel(controller.display(frame));
+        else if(frame.equals("Clients")) jList2.setModel(controller.display(frame));
+        else if(frame.equals("Facilities")) jList2.setModel(controller.display(frame));
+        else if(frame.equals("Reservations")) jList2.setModel(controller.display(frame));
+        else jList2.setModel(controller.display("Rooms"));
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,12 +51,12 @@ public class EmployeesList extends javax.swing.JFrame
     private void initComponents()
     {
 
-        jComboBoxType = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
-        jTextFieldSearch = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        jButton2 = new javax.swing.JButton();
+        jComboBoxType1 = new javax.swing.JComboBox();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList2 = new javax.swing.JList();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldSearch1 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -65,19 +74,19 @@ public class EmployeesList extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBoxType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jButton2.setText("Exact match");
 
-        jButton1.setText("Exact match");
+        jComboBoxType1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel1.setText("Search by");
-
-        jList1.setModel(new javax.swing.AbstractListModel()
+        jList2.setModel(new javax.swing.AbstractListModel()
         {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane2.setViewportView(jList2);
+
+        jLabel2.setText("Search by");
 
         jMenu1.setText("HOME");
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter()
@@ -185,31 +194,31 @@ public class EmployeesList extends javax.swing.JFrame
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jTextFieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(56, 56, 56)
-                            .addComponent(jButton1))
+                            .addComponent(jButton2))
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(69, 69, 69)
-                            .addComponent(jComboBoxType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(256, Short.MAX_VALUE))
+                            .addComponent(jComboBoxType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(253, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jTextFieldSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -233,41 +242,6 @@ public class EmployeesList extends javax.swing.JFrame
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuRommsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuRommsActionPerformed
-    {//GEN-HEADEREND:event_jMenuRommsActionPerformed
-        RoomList frame = new RoomList(controller);
-        frame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuRommsActionPerformed
-
-    private void jMenuClientsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuClientsActionPerformed
-    {//GEN-HEADEREND:event_jMenuClientsActionPerformed
-        ClientList frame = new ClientList(controller);
-        frame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuClientsActionPerformed
-
-    private void jMenuFacilitiesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuFacilitiesActionPerformed
-    {//GEN-HEADEREND:event_jMenuFacilitiesActionPerformed
-        FacilityList frame = new FacilityList(controller);
-        frame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuFacilitiesActionPerformed
-
-    private void jMenuEmployeesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuEmployeesActionPerformed
-    {//GEN-HEADEREND:event_jMenuEmployeesActionPerformed
-        EmployeesList frame = new EmployeesList(controller);
-        frame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuEmployeesActionPerformed
-
-    private void jMenuReservationsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuReservationsActionPerformed
-    {//GEN-HEADEREND:event_jMenuReservationsActionPerformed
-        ReservationList frame = new ReservationList(controller);
-        frame.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jMenuReservationsActionPerformed
-
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem3ActionPerformed
     {//GEN-HEADEREND:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
@@ -275,6 +249,31 @@ public class EmployeesList extends javax.swing.JFrame
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuRommsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuRommsActionPerformed
+    {//GEN-HEADEREND:event_jMenuRommsActionPerformed
+       jList2.setModel(controller.display("Rooms"));
+    }//GEN-LAST:event_jMenuRommsActionPerformed
+
+    private void jMenuClientsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuClientsActionPerformed
+    {//GEN-HEADEREND:event_jMenuClientsActionPerformed
+        jList2.setModel(controller.display("Clients"));
+    }//GEN-LAST:event_jMenuClientsActionPerformed
+
+    private void jMenuFacilitiesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuFacilitiesActionPerformed
+    {//GEN-HEADEREND:event_jMenuFacilitiesActionPerformed
+        jList2.setModel(controller.display("Facilities"));
+    }//GEN-LAST:event_jMenuFacilitiesActionPerformed
+
+    private void jMenuEmployeesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuEmployeesActionPerformed
+    {//GEN-HEADEREND:event_jMenuEmployeesActionPerformed
+       jList2.setModel(controller.display("Employees"));
+    }//GEN-LAST:event_jMenuEmployeesActionPerformed
+
+    private void jMenuReservationsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuReservationsActionPerformed
+    {//GEN-HEADEREND:event_jMenuReservationsActionPerformed
+        jList2.setModel(controller.display("Reservations"));
+    }//GEN-LAST:event_jMenuReservationsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -298,16 +297,16 @@ public class EmployeesList extends javax.swing.JFrame
             }
         } catch (ClassNotFoundException ex)
         {
-            java.util.logging.Logger.getLogger(EmployeesList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListFrames.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex)
         {
-            java.util.logging.Logger.getLogger(EmployeesList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListFrames.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex)
         {
-            java.util.logging.Logger.getLogger(EmployeesList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListFrames.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex)
         {
-            java.util.logging.Logger.getLogger(EmployeesList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListFrames.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -316,16 +315,16 @@ public class EmployeesList extends javax.swing.JFrame
         {
             public void run()
             {
-                new EmployeesList().setVisible(true);
+                new ListFrames().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBoxType;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JList jList1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox jComboBoxType1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JList jList2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -340,7 +339,7 @@ public class EmployeesList extends javax.swing.JFrame
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuReservations;
     private javax.swing.JMenuItem jMenuRomms;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextFieldSearch;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextFieldSearch1;
     // End of variables declaration//GEN-END:variables
 }

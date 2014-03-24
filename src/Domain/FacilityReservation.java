@@ -51,6 +51,12 @@ public class FacilityReservation
     {
         this.versionNumber = versionNumber;
     }
+
+    @Override
+    public String toString()
+    {
+        return "FacilityReservation{" + "clientID=" + clientID + ", facilityName=" + facilityName + '}';
+    }
     
     
 }

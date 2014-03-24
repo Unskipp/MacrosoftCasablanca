@@ -10,14 +10,14 @@ package Domain;
  *
  * @author Unskipp
  */
-public class Reservations
+public class Reservation
 {
     private int id,amountPayed,deposit,versionNumber;
     private String clientID;
-    private boolean payed;
+    private String payed;
 
     //DATE ???
-    public Reservations(int id, boolean payed,int deposit, int amountPayed,  int versionNumber, String clientID)
+    public Reservation(int id, String payed,int deposit, int amountPayed,  int versionNumber)
     {
         this.id = id;
         this.amountPayed = amountPayed;
@@ -77,14 +77,21 @@ public class Reservations
         this.deposit = deposit;
     }
 
-    public boolean isPayed()
+    public String getPayed()
     {
         return payed;
     }
 
-    public void setPayed(boolean payed)
+    public void setPayed(String payed)
     {
         this.payed = payed;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Reservations{" + "clientID=" + clientID + '}';
+    }
+    
     
 }

@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -9,13 +9,18 @@ package Domain;
  *
  * @author Unskipp
  */
-public class Employees
+public class Employee
 {
 
     int  versionNumber;
     private String id, firstName, lastName, position, password;
 
-    public Employees(String id, String firstName, String lastName, String position, String password, int versionNumber)
+    public Employee()
+    {
+        
+    }
+    
+    public Employee(String id, String firstName, String lastName, String position, String password, int versionNumber)
     {
         this.id = id;
         this.firstName = firstName;
@@ -83,6 +88,12 @@ public class Employees
     public void setId(String id)
     {
         this.id = id;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Employees{" + "firstName=" + firstName + ", lastName=" + lastName + '}';
     }
     
     

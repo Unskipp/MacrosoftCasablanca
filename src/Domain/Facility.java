@@ -10,12 +10,12 @@ package Domain;
  *
  * @author Unskipp
  */
-public class Facilities
+public class Facility
 {
     private int price,versionNumber;
     private String name,description;
     
-    public Facilities(String name, String description, int price, int versionNumber)
+    public Facility(String name, String description, int price, int versionNumber)
     {
         this.name=name;
         this.description=description;
@@ -61,6 +61,12 @@ public class Facilities
     public void setDescription(String description)
     {
         this.description = description;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Facilities{" + "name=" + name + '}';
     }
     
     

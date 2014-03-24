@@ -8,11 +8,8 @@ package Presentation;
 import Domain.Controller;
 import Presentation.Book.Cancellation;
 import Presentation.Book.Room;
-import Presentation.ListFrames.ClientList;
-import Presentation.ListFrames.EmployeesList;
-import Presentation.ListFrames.FacilityList;
-import Presentation.ListFrames.ReservationList;
-import Presentation.ListFrames.RoomList;
+import Presentation.ListFrames.ListFrames;
+
 
 /**
  *
@@ -181,35 +178,35 @@ public class MainPage extends javax.swing.JFrame
 
     private void jMenuRommsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuRommsActionPerformed
     {//GEN-HEADEREND:event_jMenuRommsActionPerformed
-        RoomList frame = new RoomList(controller);
+        ListFrames frame = new ListFrames(controller,"Rooms");
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuRommsActionPerformed
 
     private void jMenuClientsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuClientsActionPerformed
     {//GEN-HEADEREND:event_jMenuClientsActionPerformed
-        ClientList frame = new ClientList(controller);
+         ListFrames frame = new ListFrames(controller,"Clients");
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuClientsActionPerformed
 
     private void jMenuFacilitiesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuFacilitiesActionPerformed
     {//GEN-HEADEREND:event_jMenuFacilitiesActionPerformed
-        FacilityList frame = new FacilityList(controller);
+         ListFrames frame = new ListFrames(controller,"Facilities");
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuFacilitiesActionPerformed
 
     private void jMenuEmployeesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuEmployeesActionPerformed
     {//GEN-HEADEREND:event_jMenuEmployeesActionPerformed
-        EmployeesList frame = new EmployeesList(controller);
+        ListFrames frame = new ListFrames(controller,"Employees");
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuEmployeesActionPerformed
 
     private void jMenuReservationsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuReservationsActionPerformed
     {//GEN-HEADEREND:event_jMenuReservationsActionPerformed
-        ReservationList frame = new ReservationList(controller);
+         ListFrames frame = new ListFrames(controller,"Reservations");
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuReservationsActionPerformed

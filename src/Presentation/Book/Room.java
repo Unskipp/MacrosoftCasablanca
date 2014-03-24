@@ -357,37 +357,27 @@ public class Room extends javax.swing.JFrame
 
     private void jMenuRommsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuRommsActionPerformed
     {//GEN-HEADEREND:event_jMenuRommsActionPerformed
-        RoomList frame = new RoomList(controller);
-        frame.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_jMenuRommsActionPerformed
 
     private void jMenuClientsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuClientsActionPerformed
     {//GEN-HEADEREND:event_jMenuClientsActionPerformed
-        ClientList frame = new ClientList(controller);
-        frame.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_jMenuClientsActionPerformed
 
     private void jMenuFacilitiesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuFacilitiesActionPerformed
     {//GEN-HEADEREND:event_jMenuFacilitiesActionPerformed
-        FacilityList frame = new FacilityList(controller);
-        frame.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_jMenuFacilitiesActionPerformed
 
     private void jMenuEmployeesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuEmployeesActionPerformed
     {//GEN-HEADEREND:event_jMenuEmployeesActionPerformed
-        EmployeesList frame = new EmployeesList(controller);
-        frame.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_jMenuEmployeesActionPerformed
 
     private void jMenuReservationsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuReservationsActionPerformed
     {//GEN-HEADEREND:event_jMenuReservationsActionPerformed
-        ReservationList frame = new ReservationList(controller);
-        frame.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_jMenuReservationsActionPerformed
 
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonCancelActionPerformed
