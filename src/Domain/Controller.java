@@ -24,7 +24,8 @@ public class Controller
     private ArrayList<Facility> facilitiesList;
     private ArrayList<FacilityReservation> facilityReservationsList;
     private ArrayList<Reservation> reservationsList;
-    private ArrayList<RoomType> roomsList;
+    private ArrayList<RoomType> roomTypesList;
+    private ArrayList<Room> roomsList;
 
     public Controller()
     {
@@ -34,7 +35,8 @@ public class Controller
         facilitiesList = new ArrayList<Facility>();
         facilityReservationsList = new ArrayList<FacilityReservation>();
         reservationsList = new ArrayList<Reservation>();
-        roomsList = new ArrayList<RoomType>();
+        roomTypesList = new ArrayList<RoomType>();
+        roomsList = new ArrayList<Room>();
     }
 
     public DefaultListModel display(String frame)
@@ -74,12 +76,22 @@ public class Controller
                 o = reservationsList.get(i).toString();
                 model.addElement(o);
             }
-        } else
+        }else if (frame.equals("Rooms"))
         {
-            roomsList = dbf.getAllRoomTypes();
+            roomsList = dbf.getAllRoomss();
             for (int i = 0; i < roomsList.size(); i++)
             {
                 o = roomsList.get(i).toString();
+                model.addElement(o);
+            }
+        }
+        
+        else
+        {
+            roomTypesList = dbf.getAllRoomTypes();
+            for (int i = 0; i < roomTypesList.size(); i++)
+            {
+                o = roomTypesList.get(i).toString();
                 model.addElement(o);
             }
         }
@@ -88,14 +100,14 @@ public class Controller
 
     public DefaultComboBoxModel getAllroomsType()
     {
-        roomsList = dbf.getAllRoomTypes();
+        roomTypesList = dbf.getAllRoomTypes();
 
         Object o = new Object();
         DefaultComboBoxModel model = new DefaultComboBoxModel();
 
-        for (int i = 0; i < roomsList.size(); i++)
+        for (int i = 0; i < roomTypesList.size(); i++)
         {
-            o = roomsList.get(i).getType().toString();
+            o = roomTypesList.get(i).getType().toString();
             model.addElement(o);
         }
 
@@ -106,12 +118,12 @@ public class Controller
     {
         String result = null;
 
-        for (int i = 0; i < roomsList.size(); i++)
+        for (int i = 0; i < roomTypesList.size(); i++)
         {
-            if (roomsList.get(i).getType().equals(typeOfRoom))
+            if (roomTypesList.get(i).getType().equals(typeOfRoom))
             {
-                result = "Room type: " + roomsList.get(i).getType() + "\nPrice per night: " + Integer.toString(roomsList.get(i).getPrice())
-                        + "\nCapacity: " + Integer.toString(roomsList.get(i).getCapacity());
+                result = "Room type: " + roomTypesList.get(i).getType() + "\nPrice per night: " + Integer.toString(roomTypesList.get(i).getPrice())
+                        + "\nCapacity: " + Integer.toString(roomTypesList.get(i).getCapacity());
             }
         }
 
@@ -122,11 +134,11 @@ public class Controller
     {
         int result = 0;
 
-        for (int i = 0; i < roomsList.size(); i++)
+        for (int i = 0; i < roomTypesList.size(); i++)
         {
-            if (roomsList.get(i).getType().equals(typeOfRoom))
+            if (roomTypesList.get(i).getType().equals(typeOfRoom))
             {
-                result = (roomsList.get(i).getPrice());
+                result = (roomTypesList.get(i).getPrice());
             }
         }
 
@@ -138,9 +150,24 @@ public class Controller
 
         boolean result = false;
         boolean found = false;
+        roomsList = dbf.getAllRoomss();
+        reservationsList = dbf.getAllReservationss();
+        roomTypesList = dbf.getAllRoomTypes();
+        int typeId=0;
+        
+        for (int i = 0; i < roomTypesList.size(); i++)
+        {
+           if(roomTypesList.get(i).getType().equals(roomType))
+           {
+               typeId=i;
+               i=roomTypesList.size();
+           };
+        }
+        
         for (int i = 0; i < roomsList.size(); i++)
         {
-            if (roomsList.get(i).getType().equals(roomType))
+           
+            if (roomsList.get(i).getType()== roomTypesList.get(typeId).getId())
             {
                 for (int j = 0; j < reservationsList.size(); j++)
                 {
@@ -150,6 +177,7 @@ public class Controller
                         if (from.compareTo(reservationsList.get(j).getUntilDate()) == 1 || until.compareTo(reservationsList.get(j).getFromDate()) == -1)
                         {
                             result = true;
+                            j = reservationsList.size();
                         }
                     }
                 }
@@ -170,7 +198,7 @@ public class Controller
 
     public void getAllRoomTypes()
     {
-        roomsList = dbf.getAllRoomTypes();
+        roomTypesList = dbf.getAllRoomTypes();
     }
 
     public boolean delete(String type, int index)
