@@ -116,4 +116,9 @@ public class DBFacade
     {
         return map.confirmPayment(amount, id, connection);
     }
+    
+    public boolean saveNewFacilityReservation(FacilityReservation facilityReservation)
+    {
+        return map.saveNewFacilityReservation(facilityReservation, connection);
+    }
 }
