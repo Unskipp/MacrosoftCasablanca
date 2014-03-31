@@ -109,7 +109,7 @@ public class Reservation
     @Override
     public String toString()
     {
-        return "Reservations{" + "clientID=" + clientID + '}';
+        return " Reservation ID: " +id ;
     }
 
     public Calendar getFromDate()

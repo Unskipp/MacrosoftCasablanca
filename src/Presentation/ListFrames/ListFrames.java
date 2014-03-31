@@ -9,6 +9,7 @@ import Domain.Controller;
 import Presentation.MainPage;
 import Presentation.Book.Cancellation;
 import Presentation.Book.Room;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,7 +23,8 @@ public class ListFrames extends javax.swing.JFrame
      * Creates new form ListFrames
      */
     private Controller controller;
-
+    private String frameName;
+    
     public ListFrames()
     {
         initComponents();
@@ -32,6 +34,7 @@ public class ListFrames extends javax.swing.JFrame
     public ListFrames(Controller controller, String frame)
     {
         this();
+        frameName = frame;
         this.controller = controller;
 
         if (frame.equals("Employees"))
@@ -46,7 +49,15 @@ public class ListFrames extends javax.swing.JFrame
         } else if (frame.equals("Reservations"))
         {
             jList2.setModel(controller.display(frame));
-            jButton1.setText("Delete reservation");
+            Object o = new Object();
+            DefaultComboBoxModel model = new DefaultComboBoxModel();
+            o = "Client name";
+            model.addElement(o);
+            o = "Client ID";
+            model.addElement(o);
+            o = "Reservation ID";
+            model.addElement(o);
+            jComboBoxType1.setModel(model);
         } else
         {
             jList2.setModel(controller.display("Rooms"));
@@ -63,15 +74,15 @@ public class ListFrames extends javax.swing.JFrame
     private void initComponents()
     {
 
-        jButton2 = new javax.swing.JButton();
+        jButtonExactMatch = new javax.swing.JButton();
         jComboBoxType1 = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldSearch1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jButtonDelete = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        jButtonConfirmPayment = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -89,7 +100,14 @@ public class ListFrames extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton2.setText("Exact match");
+        jButtonExactMatch.setText("Exact match");
+        jButtonExactMatch.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButtonExactMatchActionPerformed(evt);
+            }
+        });
 
         jComboBoxType1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -103,21 +121,29 @@ public class ListFrames extends javax.swing.JFrame
 
         jLabel2.setText("Search by");
 
-        jButton1.setText("Delete");
-        jButton1.addActionListener(new java.awt.event.ActionListener()
+        jTextFieldSearch1.addKeyListener(new java.awt.event.KeyAdapter()
         {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
+            public void keyReleased(java.awt.event.KeyEvent evt)
             {
-                jButton1ActionPerformed(evt);
+                jTextFieldSearch1KeyReleased(evt);
             }
         });
 
-        jButton3.setText("Confirm payment");
-        jButton3.addActionListener(new java.awt.event.ActionListener()
+        jButtonDelete.setText("Delete");
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jButton3ActionPerformed(evt);
+                jButtonDeleteActionPerformed(evt);
+            }
+        });
+
+        jButtonConfirmPayment.setText("Confirm payment");
+        jButtonConfirmPayment.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButtonConfirmPaymentActionPerformed(evt);
             }
         });
 
@@ -225,48 +251,48 @@ public class ListFrames extends javax.swing.JFrame
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jTextFieldSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(56, 56, 56)
-                            .addComponent(jButton2))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(69, 69, 69)
-                            .addComponent(jComboBoxType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(51, 51, 51)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(69, 69, 69)
+                                .addComponent(jComboBoxType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jTextFieldSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButtonExactMatch))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(149, 149, 149)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonConfirmPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(26, 26, 26)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonExactMatch)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonDelete)
+                        .addGap(26, 26, 26)
+                        .addComponent(jButtonConfirmPayment)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -302,36 +328,51 @@ public class ListFrames extends javax.swing.JFrame
     private void jMenuRommsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuRommsActionPerformed
     {//GEN-HEADEREND:event_jMenuRommsActionPerformed
         jList2.setModel(controller.display("Rooms"));
+        frameName="Rooms";
     }//GEN-LAST:event_jMenuRommsActionPerformed
 
     private void jMenuClientsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuClientsActionPerformed
     {//GEN-HEADEREND:event_jMenuClientsActionPerformed
         jList2.setModel(controller.display("Clients"));
+        frameName="Clients";
     }//GEN-LAST:event_jMenuClientsActionPerformed
 
     private void jMenuFacilitiesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuFacilitiesActionPerformed
     {//GEN-HEADEREND:event_jMenuFacilitiesActionPerformed
         jList2.setModel(controller.display("Facilities"));
+        frameName="Facilities";
     }//GEN-LAST:event_jMenuFacilitiesActionPerformed
 
     private void jMenuEmployeesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuEmployeesActionPerformed
     {//GEN-HEADEREND:event_jMenuEmployeesActionPerformed
         jList2.setModel(controller.display("Employees"));
+        frameName="Employees";
     }//GEN-LAST:event_jMenuEmployeesActionPerformed
 
     private void jMenuReservationsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuReservationsActionPerformed
     {//GEN-HEADEREND:event_jMenuReservationsActionPerformed
         jList2.setModel(controller.display("Reservations"));
+        Object o = new Object();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        o = "Client name";
+        model.addElement(o);
+        o = "Client ID";
+        model.addElement(o);
+        o = "Reservation ID";
+        model.addElement(o);
+        jComboBoxType1.setModel(model);
+        frameName = "Reservations";
     }//GEN-LAST:event_jMenuReservationsActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
-    {//GEN-HEADEREND:event_jButton1ActionPerformed
+    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonDeleteActionPerformed
+    {//GEN-HEADEREND:event_jButtonDeleteActionPerformed
         if (jList2.getSelectedIndex() == -1)
         {
             jLabel1.setText("you have to select a reservation from the list!");
         } else
         {
-            if (controller.delete("reservation", jList2.getSelectedIndex()))
+
+            if (controller.delete("reservation", jList2.getSelectedValue().toString()))
             {
                 jList2.setModel(controller.display("Reservations"));
                 jLabel1.setText("reservation successfully deleted");
@@ -340,10 +381,10 @@ public class ListFrames extends javax.swing.JFrame
                 jLabel1.setText("failed to delete reservation");
             }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonDeleteActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton3ActionPerformed
-    {//GEN-HEADEREND:event_jButton3ActionPerformed
+    private void jButtonConfirmPaymentActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonConfirmPaymentActionPerformed
+    {//GEN-HEADEREND:event_jButtonConfirmPaymentActionPerformed
         if (jList2.getSelectedIndex() == -1)
         {
             jLabel1.setText("you have to select a reservation from the list!");
@@ -368,7 +409,29 @@ public class ListFrames extends javax.swing.JFrame
                 jLabel1.setText("payment was not confirmed");
             }
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonConfirmPaymentActionPerformed
+
+    private void jTextFieldSearch1KeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTextFieldSearch1KeyReleased
+    {//GEN-HEADEREND:event_jTextFieldSearch1KeyReleased
+        // TODO add your handling code here:
+        String valueOfSearch = jTextFieldSearch1.getText();
+        if (!"".equals(valueOfSearch) && valueOfSearch != null)
+        {
+            jList2.setModel(controller.searchBy(valueOfSearch, jComboBoxType1.getSelectedItem(), frameName));
+        }
+        else jList2.setModel(controller.display(frameName));
+    }//GEN-LAST:event_jTextFieldSearch1KeyReleased
+
+    private void jButtonExactMatchActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonExactMatchActionPerformed
+    {//GEN-HEADEREND:event_jButtonExactMatchActionPerformed
+        // TODO add your handling code here:
+        String valueOfSearch = jTextFieldSearch1.getText();
+        if (!"".equals(valueOfSearch) && valueOfSearch != null)
+        {
+            jList2.setModel(controller.searchByExactMatch(valueOfSearch, jComboBoxType1.getSelectedItem(), frameName));
+        }
+        else jList2.setModel(controller.display(frameName));
+    }//GEN-LAST:event_jButtonExactMatchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -416,9 +479,9 @@ public class ListFrames extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonConfirmPayment;
+    private javax.swing.JButton jButtonDelete;
+    private javax.swing.JButton jButtonExactMatch;
     private javax.swing.JComboBox jComboBoxType1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

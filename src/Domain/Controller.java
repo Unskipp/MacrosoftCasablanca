@@ -41,7 +41,7 @@ public class Controller
 
     public DefaultListModel display(String frame)
     {
-        Object o = new Object();
+         Object o = new Object();
         DefaultListModel model = new DefaultListModel();
 
         if (frame.equals("Employees"))
@@ -71,27 +71,24 @@ public class Controller
         } else if (frame.equals("Reservations"))
         {
             reservationsList = dbf.getAllReservationss();
+            clientsList = dbf.getAllClientss();
             for (int i = 0; i < reservationsList.size(); i++)
             {
-                o = reservationsList.get(i).toString();
-                model.addElement(o);
+                for (int j = 0; j < clientsList.size(); j++)
+                {
+                    if (reservationsList.get(i).getClientID().equals(clientsList.get(j).getId()))
+                    {
+                        o = clientsList.get(j).toString() + reservationsList.get(i).toString();
+                        model.addElement(o);
+                    }
+                }
             }
-        }else if (frame.equals("Rooms"))
+        } else
         {
             roomsList = dbf.getAllRoomss();
             for (int i = 0; i < roomsList.size(); i++)
             {
                 o = roomsList.get(i).toString();
-                model.addElement(o);
-            }
-        }
-        
-        else
-        {
-            roomTypesList = dbf.getAllRoomTypes();
-            for (int i = 0; i < roomTypesList.size(); i++)
-            {
-                o = roomTypesList.get(i).toString();
                 model.addElement(o);
             }
         }
@@ -201,18 +198,158 @@ public class Controller
         roomTypesList = dbf.getAllRoomTypes();
     }
 
-    public boolean delete(String type, int index)
+    public DefaultListModel searchBy(String valueOfSearch, Object valueOfCombobox, String frame)
+    {
+        Object o = new Object();
+        valueOfSearch.toLowerCase();
+        DefaultListModel model = new DefaultListModel();
+
+        switch (frame)
+        {
+            case "Reservations":
+            {
+                if (valueOfCombobox.equals("Client ID"))
+                {
+                    for (int i = 0; i < reservationsList.size(); i++)
+                    {
+                        String temp = reservationsList.get(i).getClientID().toLowerCase();
+                        for (int j = 0; j < clientsList.size(); j++)
+                        {
+                            if (temp.contains(valueOfSearch)
+                                    && reservationsList.get(i).getClientID().toLowerCase().equals(clientsList.get(j).getId().toLowerCase()))
+                            {
+                                o = clientsList.get(j).toString() + reservationsList.get(i).toString();
+                                model.addElement(o);
+                            }
+                        }
+                    }
+                } else if (valueOfCombobox.equals("Reservation ID"))
+                {
+                    for (int i = 0; i < reservationsList.size(); i++)
+                    {
+                        String temp = Integer.toString(reservationsList.get(i).getId());
+                        if (temp.contains(valueOfSearch))
+                        {
+                            for (int j = 0; j < clientsList.size(); j++)
+                            {
+                                if (reservationsList.get(i).getClientID().equals(clientsList.get(j).getId()))
+                                {
+                                    o = clientsList.get(j).toString() + reservationsList.get(i).toString();
+                                    model.addElement(o);
+                                }
+                            }
+                        }
+                    }
+                } else if (valueOfCombobox.equals("Client name"))
+                {
+                    valueOfSearch = valueOfSearch.toLowerCase();
+                    for (int i = 0; i < clientsList.size(); i++)
+                    {
+                        String temp = clientsList.get(i).getFirstName().toLowerCase() + " "
+                                + clientsList.get(i).getLastName().toLowerCase();
+                        if (temp.contains(valueOfSearch))
+                        {
+                            for (int j = 0; j < reservationsList.size(); j++)
+                            {
+                                if (clientsList.get(i).getId().equals(reservationsList.get(j).getClientID()))
+                                {
+                                    o = clientsList.get(i).toString() + reservationsList.get(j).toString();
+                                    model.addElement(o);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            break;
+        }
+        return model;
+    }
+
+    public DefaultListModel searchByExactMatch(String valueOfSearch, Object valueOfCombobox, String frame)
+    {
+        Object o = new Object();
+        valueOfSearch.toLowerCase();
+        DefaultListModel model = new DefaultListModel();
+
+        switch (frame)
+        {
+            case "Reservations":
+            {
+                if (valueOfCombobox.equals("Client ID"))
+                {
+                    for (int i = 0; i < reservationsList.size(); i++)
+                    {
+                        String temp = reservationsList.get(i).getClientID().toLowerCase();
+                        for (int j = 0; j < clientsList.size(); j++)
+                        {
+                            if (temp.equals(valueOfSearch)
+                                    && reservationsList.get(i).getClientID().toLowerCase().equals(clientsList.get(j).getId().toLowerCase()))
+                            {
+                                o = clientsList.get(j).toString() + reservationsList.get(i).toString();
+                                model.addElement(o);
+                            }
+                        }
+                    }
+                } else if (valueOfCombobox.equals("Reservation ID"))
+                {
+                    for (int i = 0; i < reservationsList.size(); i++)
+                    {
+                        String temp = Integer.toString(reservationsList.get(i).getId());
+                        if (temp.equals(valueOfSearch))
+                        {
+                            for (int j = 0; j < clientsList.size(); j++)
+                            {
+                                if (reservationsList.get(i).getClientID().equals(clientsList.get(j).getId()))
+                                {
+                                    o = clientsList.get(j).toString() + reservationsList.get(i).toString();
+                                    model.addElement(o);
+                                }
+                            }
+                        }
+                    }
+                } else if (valueOfCombobox.equals("Client name"))
+                {
+                    valueOfSearch = valueOfSearch.toLowerCase();
+                    for (int i = 0; i < clientsList.size(); i++)
+                    {
+                        String temp = clientsList.get(i).getFirstName().toLowerCase() + " "
+                                + clientsList.get(i).getLastName().toLowerCase();
+                        if (temp.equals(valueOfSearch))
+                        {
+                            for (int j = 0; j < reservationsList.size(); j++)
+                            {
+                                if (clientsList.get(i).getId().equals(reservationsList.get(j).getClientID()))
+                                {
+                                    o = clientsList.get(i).toString() + reservationsList.get(j).toString();
+                                    model.addElement(o);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            break;
+        }
+        
+        return model;
+    }
+    
+     public boolean delete(String type, String input)
     {
         if (type.equals("reservation"))
         {
-            if (dbf.delete(type, reservationsList.get(index).getId()))
+            for (int i = 0; i < reservationsList.size(); i++)
             {
-                reservationsList.remove(index);
-                return true;
-            }
-            else
-            {
-                return false;
+                if (input.contains(reservationsList.get(i).getClientID())
+                        && input.contains(Integer.toString(reservationsList.get(i).getId())))
+                {
+                    if (dbf.delete(type, reservationsList.get(i).getId()))
+                    {
+                        reservationsList.remove(i);
+                        return true;
+                    }
+                }
             }
         }
         return false;

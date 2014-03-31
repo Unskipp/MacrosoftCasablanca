@@ -133,7 +133,7 @@ public class Client
     @Override
     public String toString()
     {
-        return "Clients{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + '}';
+         return "Client ID: " + id + " First name: " + firstName + " Last name: " + lastName ;
     }
 
     
