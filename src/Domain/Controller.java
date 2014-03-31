@@ -117,6 +117,21 @@ public class Controller
 
         return result;
     }
+    
+    public int returnPriceAboutSelectedRoom(String typeOfRoom)
+    {
+        int result = 0;
+
+        for (int i = 0; i < roomsList.size(); i++)
+        {
+            if (roomsList.get(i).getType().equals(typeOfRoom))
+            {
+                result = (roomsList.get(i).getPrice());
+            }
+        }
+
+        return result;
+    }
 
     public boolean isAvailable(Calendar from, Calendar until, String roomType)
     {
