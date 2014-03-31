@@ -499,14 +499,59 @@ public class DataMapper
         }
         return facilitiesList;
     }
+    
+    public boolean saveNewClient(Client client, Connection con)
+    {
+        int rowsInserted = 0;
+        String SQLString1
+                = "insert into clients"
+                + "values(?,?,?,?,?,?,?,?,?)";
+        PreparedStatement statement = null;
 
-    public boolean saveNewRoomReservation(Reservation reservation, Room room, Client client, Connection con)
+        try
+        {
+
+            //== insert tuple
+            statement = con.prepareStatement(SQLString1);
+            statement.setString(1, client.getId());
+            statement.setString(2, client.getFirstName());
+            statement.setString(3, client.getLastName());
+            statement.setString(4, client.getAddress());
+            statement.setString(5, client.getCountry());
+            statement.setString(6, client.getTravelAgency());
+            statement.setInt(7, client.getPhone());
+            statement.setString(8, client.getEmail());
+            statement.setString(9, client.getPassword());
+            rowsInserted = statement.executeUpdate();
+
+            
+
+        } catch (Exception e)
+        {
+            System.out.println("Fail in dataMapper - saveNewClient");
+            System.out.println(e.getMessage());
+        } finally														// must close statement
+        {
+            try
+            {
+                statement.close();
+            } catch (SQLException e)
+            {
+                System.out.println("Fail in DataMapper - saveNewClient");
+                System.out.println(e.getMessage());
+            }
+        }
+        return rowsInserted == 1;
+    
+    }
+
+    public boolean saveNewRoomReservation(Reservation reservation, Room room, Connection con)
     {
         int rowsInsertedInReservations = 0;
         int rowsInsertedInRoomReservations = 0;
         int rowsInsertedInRooms = 0;
         int rowsInsertedInClientsReservations = 0;
-        int rowsInsertedInClients = 0;
+      
 
         String SQLString1
                 = "insert into reservations "
@@ -520,27 +565,11 @@ public class DataMapper
         String SQLString4
                 = "insert into clients_reservations"
                 + "values(?,?)";
-        String SQLString5
-                = "insert into clients"
-                + "values(?,?,?,?,?,?,?,?,?)";
+        
         PreparedStatement statement = null;
 
         try
         {
-
-            //== insert tuple
-            statement = con.prepareStatement(SQLString5);
-            statement.setString(1, client.getId());
-            statement.setString(2, client.getFirstName());
-            statement.setString(3, client.getLastName());
-            statement.setString(4, client.getAddress());
-            statement.setString(5, client.getCountry());
-            statement.setString(6, client.getTravelAgency());
-            statement.setInt(7, client.getPhone());
-            statement.setString(8, client.getEmail());
-            statement.setString(9, client.getPassword());
-            rowsInsertedInClients = statement.executeUpdate();
-
             statement = con.prepareStatement(SQLString3);
             statement.setInt(1, room.getId());
             statement.setInt(2, room.getType());
@@ -564,7 +593,7 @@ public class DataMapper
 
             statement = con.prepareStatement(SQLString4);
             statement.setInt(1, reservation.getId());
-            statement.setString(2, client.getId());
+            statement.setString(2, reservation.getClientID());
             rowsInsertedInClientsReservations = statement.executeUpdate();
 
         } catch (Exception e)
@@ -582,7 +611,7 @@ public class DataMapper
                 System.out.println(e.getMessage());
             }
         }
-        return rowsInsertedInReservations == 1 && rowsInsertedInRoomReservations == 1 && rowsInsertedInRooms == 1 && rowsInsertedInClientsReservations  == 1 && rowsInsertedInClients == 1 ;
+        return rowsInsertedInReservations == 1 && rowsInsertedInRoomReservations == 1 && rowsInsertedInRooms == 1 && rowsInsertedInClientsReservations  == 1 ;
     }
 
     public ArrayList<FacilityReservation> getFacilityReservationsBy(Connection con, String searchCriteria, String value)

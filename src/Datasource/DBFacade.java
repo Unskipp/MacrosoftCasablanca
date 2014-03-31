@@ -91,10 +91,15 @@ public class DBFacade
     {
         return map.getAllFacilities(connection);
     }
+    
+    public boolean saveNewClient(Client client)
+    {
+        return map.saveNewClient(client, connection);
+    }
 
     public boolean saveNewRoomReservation(Reservation reservation, Room room, Client client)
     {
-        return map.saveNewRoomReservation(reservation, room, client, connection);
+        return map.saveNewRoomReservation(reservation, room, connection);
     }
 
     public ArrayList<FacilityReservation> getFacilityReservationsBy(String searchCriteria, String value)
