@@ -366,8 +366,29 @@ public class Controller
         return false;
     }
     
+    public boolean saveNewClient(String id, String firstName, String lastName, String address, String country, String travelAgency, int phone,
+            String email, String password) 
+    {
+        int versionNumber = 1;
+        return dbf.saveNewClient(new Client(id, firstName, lastName, address, country, travelAgency, phone, email, password, versionNumber));
+    }
+   
     public boolean confirmPayment(double amount, int index)
     {
         return dbf.confirmPayment(amount, reservationsList.get(index).getId());
     }
+    
+    public String chosenClient(String input)
+    {
+        clientsList = dbf.getAllClientss();    
+        for (int i = 0; i < clientsList.size(); i++)
+            {
+                if (input.contains(clientsList.get(i).getId()))
+                {
+                    return clientsList.get(i).getFirstName()+" "+clientsList.get(i).getLastName()+", Phone Nr.: "+clientsList.get(i).getPhone();
+                }
+            }
+        return "Could't select client.";
+    }
 }
+
