@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Presentation.Book;
 
 import Domain.Controller;
 import Presentation.*;
+import java.awt.Color;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author Unskipp
@@ -21,15 +22,16 @@ public class Room extends javax.swing.JFrame
      * Creates new form Room
      */
     Controller controller;
+
     public Room()
     {
         initComponents();
     }
-    
+
     public Room(Controller controller)
     {
         this();
-        this.controller=controller;
+        this.controller = controller;
         jComboBoxRoomType.setModel(controller.getAllroomsType());
         jTextAreaRoomInfo.setText(controller.returnDataAboutSelectedRoom(jComboBoxRoomType.getSelectedItem().toString()));
         controller.getAllReservations();
@@ -73,6 +75,7 @@ public class Room extends javax.swing.JFrame
         jTextAreaRoomInfo = new javax.swing.JTextArea();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        jLabel13 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -89,6 +92,7 @@ public class Room extends javax.swing.JFrame
         jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(700, 700));
 
         jLabel1.setText("Room type");
 
@@ -98,6 +102,13 @@ public class Room extends javax.swing.JFrame
             public void itemStateChanged(java.awt.event.ItemEvent evt)
             {
                 jComboBoxRoomTypeItemStateChanged(evt);
+            }
+        });
+        jComboBoxRoomType.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jComboBoxRoomTypeActionPerformed(evt);
             }
         });
 
@@ -173,6 +184,8 @@ public class Room extends javax.swing.JFrame
                 jDateChooser2PropertyChange(evt);
             }
         });
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jMenu1.setText("HOME");
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter()
@@ -274,26 +287,29 @@ public class Room extends javax.swing.JFrame
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addGap(67, 67, 67)
+                                    .addComponent(jComboBoxRoomType, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel5)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(10, 10, 10)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(67, 67, 67)
-                                .addComponent(jComboBoxRoomType, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButtonCheckAvailability)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(33, 33, 33)
-                                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(38, 38, 38))
+                                .addGap(34, 34, 34)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButtonCheckAvailability, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(20, 20, 20))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jButtonCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -316,12 +332,12 @@ public class Room extends javax.swing.JFrame
                                     .addComponent(jTextFieldRoomAssigned, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jComboBoxDiscount, javax.swing.GroupLayout.Alignment.LEADING, 0, 96, Short.MAX_VALUE)
                                     .addComponent(jTextFieldFinalPrice, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButtonBook, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -335,18 +351,21 @@ public class Room extends javax.swing.JFrame
                             .addComponent(jComboBoxRoomType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(22, 22, 22)
-                        .addComponent(jButtonCheckAvailability)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jTextFieldFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(22, 22, 22)
+                                .addComponent(jButtonCheckAvailability)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jTextFieldFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
@@ -380,7 +399,7 @@ public class Room extends javax.swing.JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancel)
                     .addComponent(jButtonBook))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -397,27 +416,27 @@ public class Room extends javax.swing.JFrame
 
     private void jMenuRommsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuRommsActionPerformed
     {//GEN-HEADEREND:event_jMenuRommsActionPerformed
-        
+
     }//GEN-LAST:event_jMenuRommsActionPerformed
 
     private void jMenuClientsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuClientsActionPerformed
     {//GEN-HEADEREND:event_jMenuClientsActionPerformed
-        
+
     }//GEN-LAST:event_jMenuClientsActionPerformed
 
     private void jMenuFacilitiesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuFacilitiesActionPerformed
     {//GEN-HEADEREND:event_jMenuFacilitiesActionPerformed
-        
+
     }//GEN-LAST:event_jMenuFacilitiesActionPerformed
 
     private void jMenuEmployeesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuEmployeesActionPerformed
     {//GEN-HEADEREND:event_jMenuEmployeesActionPerformed
-        
+
     }//GEN-LAST:event_jMenuEmployeesActionPerformed
 
     private void jMenuReservationsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuReservationsActionPerformed
     {//GEN-HEADEREND:event_jMenuReservationsActionPerformed
-        
+
     }//GEN-LAST:event_jMenuReservationsActionPerformed
 
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonCancelActionPerformed
@@ -444,8 +463,8 @@ public class Room extends javax.swing.JFrame
 
     private void jButtonBookActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonBookActionPerformed
     {//GEN-HEADEREND:event_jButtonBookActionPerformed
-        // TODO add your handling code here:
-      
+
+
     }//GEN-LAST:event_jButtonBookActionPerformed
 
     private void jButtonCheckAvailabilityActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonCheckAvailabilityActionPerformed
@@ -468,14 +487,18 @@ public class Room extends javax.swing.JFrame
 //        else System.out.println("Not possible");
 //        
 //        System.out.println(cal3.compareTo(cal2));
-        try{
-        if(controller.isAvailable(jDateChooser1.getCalendar(), jDateChooser2.getCalendar(),jComboBoxRoomType.getSelectedItem().toString())==true)
+        try
         {
-            System.out.println("possible");
-        }
-        else System.out.println("not possible");
-        }
-        catch (Exception e)
+            if (controller.isAvailable(jDateChooser1.getCalendar(), jDateChooser2.getCalendar(), jComboBoxRoomType.getSelectedItem().toString()) == true)
+            {
+                jLabel13.setForeground(Color.black);
+                jLabel13.setText("possible");
+            } else
+            {
+                jLabel13.setForeground(Color.red);
+                jLabel13.setText("not possible");
+            }
+        } catch (Exception e)
         {
             System.out.println("Error in date select");
             System.out.println(e);
@@ -486,13 +509,18 @@ public class Room extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jDateChooser1PropertyChange
         // TODO add your handling code here:
         jDateChooser2.setMinSelectableDate(jDateChooser1.getDate());
-      
+
     }//GEN-LAST:event_jDateChooser1PropertyChange
 
     private void jDateChooser2PropertyChange(java.beans.PropertyChangeEvent evt)//GEN-FIRST:event_jDateChooser2PropertyChange
     {//GEN-HEADEREND:event_jDateChooser2PropertyChange
 
     }//GEN-LAST:event_jDateChooser2PropertyChange
+
+    private void jComboBoxRoomTypeActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jComboBoxRoomTypeActionPerformed
+    {//GEN-HEADEREND:event_jComboBoxRoomTypeActionPerformed
+        jLabel13.setText(null);
+    }//GEN-LAST:event_jComboBoxRoomTypeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -551,6 +579,7 @@ public class Room extends javax.swing.JFrame
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

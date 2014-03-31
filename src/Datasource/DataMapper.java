@@ -5,7 +5,6 @@
  */
 package Datasource;
 
-
 import Domain.Client;
 import Domain.Employee;
 import Domain.Facility;
@@ -13,9 +12,6 @@ import Domain.FacilityReservation;
 import Domain.Reservation;
 import Domain.Room;
 import Domain.RoomType;
-
-
-
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -144,7 +140,7 @@ public class DataMapper
                 room = new Room(rs.getInt(1),
                         rs.getInt(2),
                         rs.getInt(3)
-                        );
+                );
                 roomsList.add(room);
 
             }
@@ -185,7 +181,7 @@ public class DataMapper
                 room = new Room(rs.getInt(1),
                         rs.getInt(2),
                         rs.getInt(3)
-                        );
+                );
                 roomsList.add(room);
 
             }
@@ -208,7 +204,7 @@ public class DataMapper
         return roomsList;
     }
 
-    public ArrayList<Client> getClientssBy(Connection con, String searchCriteria, String value,String clientID)
+    public ArrayList<Client> getClientssBy(Connection con, String searchCriteria, String value, String clientID)
     {
         ArrayList<Client> ClientsList = new ArrayList<>();
         Client Clients = null;
@@ -318,7 +314,7 @@ public class DataMapper
                 + "from  clients c join clients_reservations cr on c.id = cr.client_id "
                 + "join reservations r on cr.res_id = r.id "
                 + "join room_reservations rr on rr.res_id = r.id "
-                + "where"+ searchCriteria+ "=?";
+                + "where" + searchCriteria + "=?";
         PreparedStatement statement = null;
 
         try
@@ -333,7 +329,7 @@ public class DataMapper
             ResultSet rs = statement.executeQuery();
             while (rs.next())
             {
-                
+
                 reservation = new Reservation(rs.getInt(1),
                         rs.getString(2),
                         rs.getInt(3),
@@ -343,7 +339,7 @@ public class DataMapper
                         rs.getDate(7),
                         rs.getDate(8),
                         rs.getInt(9)
-                        );
+                );
                 reservationsList.add(reservation);
 
             }
@@ -374,8 +370,7 @@ public class DataMapper
                 "select   r.*, c.id, rr.starting_date, rr.ending_date,rr.room_id "
                 + "from  clients c join clients_reservations cr on c.id = cr.client_id "
                 + "join reservations r on cr.res_id = r.id "
-                + "join room_reservations rr on rr.res_id = r.id"
-              ;
+                + "join room_reservations rr on rr.res_id = r.id";
         PreparedStatement statement = null;
 
         try
@@ -384,7 +379,7 @@ public class DataMapper
             ResultSet rs = statement.executeQuery(SQLString1);
             while (rs.next())
             {
-                 reservation = new Reservation(rs.getInt(1),
+                reservation = new Reservation(rs.getInt(1),
                         rs.getString(2),
                         rs.getInt(3),
                         rs.getInt(4),
@@ -392,9 +387,8 @@ public class DataMapper
                         rs.getString(6),
                         rs.getDate(7),
                         rs.getDate(8),
-                         rs.getInt(9)
-                        
-                        );
+                        rs.getInt(9)
+                );
                 reservationsList.add(reservation);
 
             }
@@ -511,26 +505,25 @@ public class DataMapper
         int rowsInsertedInReservations = 0;
         int rowsInsertedInRoomReservations = 0;
 
-        String SQLString1 =
-                "insert into reservations "
+        String SQLString1
+                = "insert into reservations "
                 + "values (?,?,?,?,?)";
-        String SQLString2 =
-                "insert into room_reservations"
+        String SQLString2
+                = "insert into room_reservations"
                 + "values(?,?,?,?,?)";
-        String SQLString3 =
-                "insert into rooms"
+        String SQLString3
+                = "insert into rooms"
                 + "values(?,?,?)";
-        String SQLString4 =
-                "insert into clients_reservations"
+        String SQLString4
+                = "insert into clients_reservations"
                 + "values(?,?)";
-        String SQLString5 =
-                "insert into clients"
+        String SQLString5
+                = "insert into clients"
                 + "values(?,?,?,?,?,?,?,?,?)";
         PreparedStatement statement = null;
 
         try
         {
-
 
             //== insert tuple
             statement = con.prepareStatement(SQLString5);
@@ -543,11 +536,11 @@ public class DataMapper
             statement.setInt(7, client.getPhone());
             statement.setString(8, client.getEmail());
             statement.setString(9, client.getPassword());
-            
-             statement = con.prepareStatement(SQLString3);
+
+            statement = con.prepareStatement(SQLString3);
             statement.setInt(1, room.getId());
             statement.setInt(2, room.getType());
-            
+
             statement = con.prepareStatement(SQLString1);
             statement.setInt(1, reservation.getId());
             statement.setString(2, reservation.getPayed());
@@ -559,8 +552,8 @@ public class DataMapper
             statement = con.prepareStatement(SQLString2);
             statement.setInt(1, reservation.getId());
             statement.setInt(2, room.getId());
-            statement.setString(3, "10-08-2013" );
-            statement.setString(4, "12-08-2013" );
+            statement.setString(3, "10-08-2013");
+            statement.setString(4, "12-08-2013");
             statement.setInt(5, reservation.getVersionNumber());
             rowsInsertedInRoomReservations = statement.executeUpdate();
 
@@ -568,7 +561,6 @@ public class DataMapper
             statement.setInt(1, reservation.getId());
             statement.setString(2, client.getId());
 
-            
         } catch (Exception e)
         {
             System.out.println("Fail in dataMapper - saveNewRoomReservation");
@@ -630,7 +622,7 @@ public class DataMapper
         }
         return facilityResList;
     }
-    
+
     public ArrayList<RoomType> getAllRoomTypes(Connection con)
     {
         ArrayList<RoomType> roomTypesList = new ArrayList<>();
@@ -646,7 +638,7 @@ public class DataMapper
             ResultSet rs = statement.executeQuery(SQLString1);
             while (rs.next())
             {
-                roomType = new RoomType(rs.getInt(1),                        
+                roomType = new RoomType(rs.getInt(1),
                         rs.getInt(2),
                         rs.getString(3),
                         rs.getInt(4));
@@ -670,5 +662,98 @@ public class DataMapper
             }
         }
         return roomTypesList;
+    }
+
+    public boolean delete(String type, int id, Connection con)
+    {
+        String sqlString1 = null, sqlString2 = null, sqlString3 = null;
+        int tuplesDeleted;
+        boolean result = true;
+        if (type.equals("reservation"))
+        {
+            sqlString1 = "DELETE FROM CLIENTS_RESERVATIONS "
+                    + "WHERE RES_ID = ?";
+            sqlString2 = "DELETE FROM ROOM_RESERVATIONS "
+                    + "WHERE RES_ID = ?";
+            sqlString3 = "DELETE FROM RESERVATIONS "
+                    + "WHERE ID = ?";
+        }
+        PreparedStatement statement = null;
+
+        try
+        {
+            statement = con.prepareStatement(sqlString1);
+            statement.setInt(1, id);
+            tuplesDeleted = statement.executeUpdate();
+            if (tuplesDeleted == 0)
+            {
+                result = false;
+            }
+            statement = con.prepareStatement(sqlString2);
+            statement.setInt(1, id);
+            tuplesDeleted = statement.executeUpdate();
+            if (tuplesDeleted == 0)
+            {
+                result = false;
+            }
+            statement = con.prepareStatement(sqlString3);
+            statement.setInt(1, id);
+            tuplesDeleted = statement.executeUpdate();
+            if (tuplesDeleted == 0)
+            {
+                result = false;
+            }
+        } catch (SQLException e)
+        {
+            System.out.println("Fail in DataMapper - delete");
+            System.out.println(e.getMessage());
+            result = false;
+        } finally														// must close statement
+        {
+            try
+            {
+                statement.close();
+            } catch (SQLException e)
+            {
+                System.out.println("Fail in DataMapper - delete");
+                System.out.println(e.getMessage());
+                result = false;
+            }
+        }
+
+        return result;
+    }
+
+    public boolean confirmPayment(double amount, int id, Connection con)
+    {
+        String sqlString = 
+                "UPDATE RESERVATIONS " + 
+                "SET AMOUNT_PAYED = ?, PAYED = 'Y' " + 
+                "WHERE ID = ?";
+        PreparedStatement statement = null;
+
+        try
+        {
+            statement = con.prepareStatement(sqlString);
+            statement.setDouble(1, amount);
+            statement.setInt(2, id);
+            return statement.executeUpdate() == 1;
+        } catch (SQLException e)
+        {
+            System.out.println("Fail in DataMapper - confirmPayment");
+            System.out.println(e.getMessage());
+        } finally														// must close statement
+        {
+            try
+            {
+                statement.close();
+            } catch (SQLException e)
+            {
+                System.out.println("Fail in DataMapper - confirmPayment");
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        return true;
     }
 }

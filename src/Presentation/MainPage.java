@@ -60,7 +60,9 @@ public class MainPage extends javax.swing.JFrame
         jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setName("Casablanca Hotel"); // NOI18N
         setPreferredSize(new java.awt.Dimension(691, 421));
+        setResizable(false);
 
         jMenu1.setText("HOME");
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter()

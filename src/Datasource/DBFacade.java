@@ -62,9 +62,9 @@ public class DBFacade
         return map.getAllRoomss(connection);
     }
 
-    public ArrayList<Client> getClientssBy(String searchCriteria, String value,String clientID)
+    public ArrayList<Client> getClientssBy(String searchCriteria, String value, String clientID)
     {
-        return map.getClientssBy(connection, searchCriteria, value,clientID);
+        return map.getClientssBy(connection, searchCriteria, value, clientID);
     }
 
     public ArrayList<Client> getAllClientss()
@@ -91,17 +91,29 @@ public class DBFacade
     {
         return map.getAllFacilities(connection);
     }
-    
+
     public boolean saveNewRoomReservation(Reservation reservation, Room room, Client client)
     {
         return map.saveNewRoomReservation(reservation, room, client, connection);
     }
+
     public ArrayList<FacilityReservation> getFacilityReservationsBy(String searchCriteria, String value)
     {
         return map.getFacilityReservationsBy(connection, searchCriteria, value);
     }
+
     public ArrayList<RoomType> getAllRoomTypes()
     {
         return map.getAllRoomTypes(connection);
+    }
+
+    public boolean delete(String type, int id)
+    {
+        return map.delete(type, id, connection);
+    }
+    
+    public boolean confirmPayment(double amount, int id)
+    {
+        return map.confirmPayment(amount, id, connection);
     }
 }

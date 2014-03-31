@@ -131,7 +131,7 @@ public class Controller
                 {
                     if (roomsList.get(i).getId() == reservationsList.get(j).getRoomID())
                     {
-                        found=true;
+                        found = true;
                         if (from.compareTo(reservationsList.get(j).getUntilDate()) == 1 || until.compareTo(reservationsList.get(j).getFromDate()) == -1)
                         {
                             result = true;
@@ -140,7 +140,11 @@ public class Controller
                 }
             }
         }
-        if (found==false) result = true;
+        // found = true if we have at least 1 reservation for the specified room type in the reservationsList
+        if (found == false)
+        {
+            result = true;
+        }
         return result;
     }
 
@@ -152,5 +156,27 @@ public class Controller
     public void getAllRoomTypes()
     {
         roomsList = dbf.getAllRoomTypes();
+    }
+
+    public boolean delete(String type, int index)
+    {
+        if (type.equals("reservation"))
+        {
+            if (dbf.delete(type, reservationsList.get(index).getId()))
+            {
+                reservationsList.remove(index);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return false;
+    }
+    
+    public boolean confirmPayment(double amount, int index)
+    {
+        return dbf.confirmPayment(amount, reservationsList.get(index).getId());
     }
 }
