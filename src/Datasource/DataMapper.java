@@ -504,6 +504,9 @@ public class DataMapper
     {
         int rowsInsertedInReservations = 0;
         int rowsInsertedInRoomReservations = 0;
+        int rowsInsertedInRooms = 0;
+        int rowsInsertedInClientsReservations = 0;
+        int rowsInsertedInClients = 0;
 
         String SQLString1
                 = "insert into reservations "
@@ -536,10 +539,12 @@ public class DataMapper
             statement.setInt(7, client.getPhone());
             statement.setString(8, client.getEmail());
             statement.setString(9, client.getPassword());
+            rowsInsertedInClients = statement.executeUpdate();
 
             statement = con.prepareStatement(SQLString3);
             statement.setInt(1, room.getId());
             statement.setInt(2, room.getType());
+            rowsInsertedInRooms = statement.executeUpdate();
 
             statement = con.prepareStatement(SQLString1);
             statement.setInt(1, reservation.getId());
@@ -560,6 +565,7 @@ public class DataMapper
             statement = con.prepareStatement(SQLString4);
             statement.setInt(1, reservation.getId());
             statement.setString(2, client.getId());
+            rowsInsertedInClientsReservations = statement.executeUpdate();
 
         } catch (Exception e)
         {
@@ -576,7 +582,7 @@ public class DataMapper
                 System.out.println(e.getMessage());
             }
         }
-        return rowsInsertedInReservations == 1 && rowsInsertedInRoomReservations == 1;
+        return rowsInsertedInReservations == 1 && rowsInsertedInRoomReservations == 1 && rowsInsertedInRooms == 1 && rowsInsertedInClientsReservations  == 1 && rowsInsertedInClients == 1 ;
     }
 
     public ArrayList<FacilityReservation> getFacilityReservationsBy(Connection con, String searchCriteria, String value)
@@ -755,5 +761,48 @@ public class DataMapper
         }
         
         return true;
+    }
+
+
+ public boolean saveNewFacilityReservation(FacilityReservation facilityReservation,Connection con)
+    {
+        int rowsInserted = 0;
+
+        String SQLString1
+                = "insert into facilities_reservations "
+                + "values (?,?,?,?)";
+        
+        PreparedStatement statement = null;
+
+        try
+        {
+
+            //== insert tuple
+            statement = con.prepareStatement(SQLString1);
+            statement.setString(1, facilityReservation.getClientID());
+            statement.setString(2, facilityReservation.getFacilityName());
+            statement.setString(3, facilityReservation.getStartingDate());
+            statement.setString(4, facilityReservation.getEndingDate());
+            rowsInserted = statement.executeUpdate();
+            
+
+            
+
+        } catch (Exception e)
+        {
+            System.out.println("Fail in dataMapper - saveNewFacilityReservation");
+            System.out.println(e.getMessage());
+        } finally														// must close statement
+        {
+            try
+            {
+                statement.close();
+            } catch (SQLException e)
+            {
+                System.out.println("Fail in DataMapper - saveNewFacilityReservation");
+                System.out.println(e.getMessage());
+            }
+        }
+        return rowsInserted == 1;
     }
 }
