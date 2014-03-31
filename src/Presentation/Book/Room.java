@@ -22,12 +22,12 @@ public class Room extends javax.swing.JFrame
      * Creates new form Room
      */
     Controller controller;
-
+    
     public Room()
     {
         initComponents();
     }
-
+    
     public Room(Controller controller)
     {
         this();
@@ -331,8 +331,7 @@ public class Room extends javax.swing.JFrame
                                     .addComponent(jTextFieldAddress, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextFieldRoomAssigned, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jComboBoxDiscount, javax.swing.GroupLayout.Alignment.LEADING, 0, 96, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldFinalPrice, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jTextFieldFinalPrice, javax.swing.GroupLayout.Alignment.LEADING)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButtonBook, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -463,7 +462,7 @@ public class Room extends javax.swing.JFrame
 
     private void jButtonBookActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonBookActionPerformed
     {//GEN-HEADEREND:event_jButtonBookActionPerformed
-
+        
 
     }//GEN-LAST:event_jButtonBookActionPerformed
 
@@ -487,12 +486,26 @@ public class Room extends javax.swing.JFrame
 //        else System.out.println("Not possible");
 //        
 //        System.out.println(cal3.compareTo(cal2));
+        Calendar earlier = jDateChooser1.getCalendar();
+        Calendar later = jDateChooser2.getCalendar();
+        int tempDifference = 0;
+        int difference = 0;
         try
         {
-            if (controller.isAvailable(jDateChooser1.getCalendar(), jDateChooser2.getCalendar(), jComboBoxRoomType.getSelectedItem().toString()) == true)
+            if (controller.isAvailable(earlier, later, jComboBoxRoomType.getSelectedItem().toString()) == true)
             {
                 jLabel13.setForeground(Color.black);
                 jLabel13.setText("possible");
+                tempDifference = 365 * (later.get(Calendar.YEAR) - earlier.get(Calendar.YEAR));
+                difference += tempDifference;
+                
+                earlier.add(Calendar.DAY_OF_YEAR, tempDifference);
+                tempDifference = later.get(Calendar.DAY_OF_YEAR) - earlier.get(Calendar.DAY_OF_YEAR);
+                difference += tempDifference;
+                
+                earlier.add(Calendar.DAY_OF_YEAR, tempDifference);
+                
+                jTextFieldFinalPrice.setText(difference*controller.returnPriceAboutSelectedRoom(jComboBoxRoomType.getSelectedItem().toString())+""); //move the price to different method cause right now it's being calculated on check availability press
             } else
             {
                 jLabel13.setForeground(Color.red);
