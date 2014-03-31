@@ -144,7 +144,7 @@ public class Controller
     }
 
     public boolean isAvailable(Calendar from, Calendar until, String roomType)
-    {
+       {
 
         boolean result = false;
         boolean found = false;
@@ -152,6 +152,7 @@ public class Controller
         reservationsList = dbf.getAllReservationss();
         roomTypesList = dbf.getAllRoomTypes();
         int typeId=0;
+        int availableRooms=0;
         
         for (int i = 0; i < roomTypesList.size(); i++)
         {
@@ -159,7 +160,14 @@ public class Controller
            {
                typeId=i;
                i=roomTypesList.size();
-           };
+           }
+        }
+        
+        for (int i = 0; i < roomsList.size(); i++)
+        {
+            if(roomsList.get(i).getType()== roomTypesList.get(typeId).getId()){
+                availableRooms ++;
+            }
         }
         
         for (int i = 0; i < roomsList.size(); i++)
@@ -174,16 +182,18 @@ public class Controller
                         found = true;
                         if (from.compareTo(reservationsList.get(j).getUntilDate()) == 1 || until.compareTo(reservationsList.get(j).getFromDate()) == -1)
                         {
-                            result = true;
-                            j = reservationsList.size();
-                        }
+                            
+                        }else{availableRooms--;
+                            j = reservationsList.size();}
                     }
                 }
             }
         }
         // found = true if we have at least 1 reservation for the specified room type in the reservationsList
-        if (found == false)
+        if (availableRooms == 0)
         {
+            result = false;
+        }else{
             result = true;
         }
         return result;
