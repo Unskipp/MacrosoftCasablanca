@@ -6,6 +6,7 @@
 package Domain;
 
 import Datasource.DBFacade;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
@@ -386,6 +387,27 @@ public class Controller
                 if (input.contains(clientsList.get(i).getId()))
                 {
                     return clientsList.get(i).getFirstName()+" "+clientsList.get(i).getLastName()+", Phone Nr.: "+clientsList.get(i).getPhone();
+                }
+            }
+        return "Could't select client.";
+    }
+    
+    public boolean saveNewRoomReservation(int roomId, int roomType, int resId, String resPayed, int deposit, int amountPayed,
+            Date fromDate, Date untilDate, String clientId)
+    {
+        Room room = new Room(roomId, roomType, 1);
+        Reservation reservation= new Reservation(resId, resPayed, deposit, amountPayed, 1, clientId, fromDate, untilDate, roomId);
+        return dbf.saveNewRoomReservation(reservation, room);
+    }
+    
+    public String getClientId(String input)
+    {
+        clientsList = dbf.getAllClientss();    
+        for (int i = 0; i < clientsList.size(); i++)
+            {
+                if (input.contains(clientsList.get(i).getId()))
+                {
+                    return clientsList.get(i).getId();
                 }
             }
         return "Could't select client.";

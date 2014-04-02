@@ -18,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  *
@@ -499,13 +500,13 @@ public class DataMapper
         }
         return facilitiesList;
     }
-    
+
     public boolean saveNewClient(Client client, Connection con)
     {
         int rowsInserted = 0;
         String SQLString1
-                = "insert into clients"
-                + "values(?,?,?,?,?,?,?,?,?)";
+                = "insert into clients "
+                + "values(?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement statement = null;
 
         try
@@ -522,9 +523,8 @@ public class DataMapper
             statement.setInt(7, client.getPhone());
             statement.setString(8, client.getEmail());
             statement.setString(9, client.getPassword());
+            statement.setInt(10, client.getVersionNumber());
             rowsInserted = statement.executeUpdate();
-
-            
 
         } catch (Exception e)
         {
@@ -542,7 +542,7 @@ public class DataMapper
             }
         }
         return rowsInserted == 1;
-    
+
     }
 
     public boolean saveNewRoomReservation(Reservation reservation, Room room, Connection con)
@@ -551,29 +551,30 @@ public class DataMapper
         int rowsInsertedInRoomReservations = 0;
         int rowsInsertedInRooms = 0;
         int rowsInsertedInClientsReservations = 0;
-      
 
         String SQLString1
                 = "insert into reservations "
                 + "values (?,?,?,?,?)";
         String SQLString2
-                = "insert into room_reservations"
+                = "insert into room_reservations  "
                 + "values(?,?,?,?,?)";
-        String SQLString3
-                = "insert into rooms"
-                + "values(?,?,?)";
         String SQLString4
-                = "insert into clients_reservations"
-                + "values(?,?)";
-        
+                = "insert into clients_reservations "
+                + "values(?,?,?)";
+        String SQLString5
+                = "select reservations_seq.nextval  "
+                + "from dual";
+
         PreparedStatement statement = null;
 
         try
         {
-            statement = con.prepareStatement(SQLString3);
-            statement.setInt(1, room.getId());
-            statement.setInt(2, room.getType());
-            rowsInsertedInRooms = statement.executeUpdate();
+            statement = con.prepareStatement(SQLString5);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next())
+            {
+                reservation.setId(rs.getInt(1));
+            }
 
             statement = con.prepareStatement(SQLString1);
             statement.setInt(1, reservation.getId());
@@ -583,17 +584,21 @@ public class DataMapper
             statement.setInt(5, reservation.getVersionNumber());
             rowsInsertedInReservations = statement.executeUpdate();
 
+            java.sql.Date sqlFromDate =  new java.sql.Date(reservation.getFromDate().getTime().getTime() );
+            java.sql.Date sqlUntilDate =  new java.sql.Date(reservation.getUntilDate().getTime().getTime() );
+
             statement = con.prepareStatement(SQLString2);
             statement.setInt(1, reservation.getId());
             statement.setInt(2, room.getId());
-            statement.setString(3, "10-08-2013");
-            statement.setString(4, "12-08-2013");
+            statement.setDate(3, sqlFromDate);
+            statement.setDate(4, sqlUntilDate);
             statement.setInt(5, reservation.getVersionNumber());
             rowsInsertedInRoomReservations = statement.executeUpdate();
 
             statement = con.prepareStatement(SQLString4);
             statement.setInt(1, reservation.getId());
             statement.setString(2, reservation.getClientID());
+            statement.setInt(3, 1);
             rowsInsertedInClientsReservations = statement.executeUpdate();
 
         } catch (Exception e)
@@ -611,7 +616,7 @@ public class DataMapper
                 System.out.println(e.getMessage());
             }
         }
-        return rowsInsertedInReservations == 1 && rowsInsertedInRoomReservations == 1 && rowsInsertedInRooms == 1 && rowsInsertedInClientsReservations  == 1 ;
+        return rowsInsertedInReservations == 1 && rowsInsertedInRoomReservations == 1 && rowsInsertedInRooms == 1 && rowsInsertedInClientsReservations == 1;
     }
 
     public ArrayList<FacilityReservation> getFacilityReservationsBy(Connection con, String searchCriteria, String value)
@@ -761,10 +766,10 @@ public class DataMapper
 
     public boolean confirmPayment(double amount, int id, Connection con)
     {
-        String sqlString = 
-                "UPDATE RESERVATIONS " + 
-                "SET AMOUNT_PAYED = ?, PAYED = 'Y' " + 
-                "WHERE ID = ?";
+        String sqlString
+                = "UPDATE RESERVATIONS "
+                + "SET AMOUNT_PAYED = ?, PAYED = 'Y' "
+                + "WHERE ID = ?";
         PreparedStatement statement = null;
 
         try
@@ -788,19 +793,18 @@ public class DataMapper
                 System.out.println(e.getMessage());
             }
         }
-        
+
         return true;
     }
 
-
- public boolean saveNewFacilityReservation(FacilityReservation facilityReservation,Connection con)
+    public boolean saveNewFacilityReservation(FacilityReservation facilityReservation, Connection con)
     {
         int rowsInserted = 0;
 
         String SQLString1
                 = "insert into facilities_reservations "
                 + "values (?,?,?,?)";
-        
+
         PreparedStatement statement = null;
 
         try
@@ -813,9 +817,6 @@ public class DataMapper
             statement.setString(3, facilityReservation.getStartingDate());
             statement.setString(4, facilityReservation.getEndingDate());
             rowsInserted = statement.executeUpdate();
-            
-
-            
 
         } catch (Exception e)
         {

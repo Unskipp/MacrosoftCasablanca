@@ -97,7 +97,7 @@ public class DBFacade
         return map.saveNewClient(client, connection);
     }
 
-    public boolean saveNewRoomReservation(Reservation reservation, Room room, Client client)
+    public boolean saveNewRoomReservation(Reservation reservation, Room room)
     {
         return map.saveNewRoomReservation(reservation, room, connection);
     }
