@@ -42,7 +42,7 @@ public class Controller
 
     public DefaultListModel display(String frame)
     {
-         Object o = new Object();
+        Object o = new Object();
         DefaultListModel model = new DefaultListModel();
 
         if (frame.equals("Employees"))
@@ -93,7 +93,7 @@ public class Controller
                 model.addElement(o);
             }
         }
-        
+
         return model;
     }
 
@@ -128,7 +128,7 @@ public class Controller
 
         return result;
     }
-    
+
     public int returnPriceAboutSelectedRoom(String typeOfRoom)
     {
         int result = 0;
@@ -144,37 +144,43 @@ public class Controller
         return result;
     }
 
+    int assignedRoom;
+    public int getAssignedRoom()
+    {
+        return assignedRoom;
+    }
     public boolean isAvailable(Calendar from, Calendar until, String roomType)
-       {
+    {
 
         boolean result = false;
         boolean found = false;
         roomsList = dbf.getAllRoomss();
         reservationsList = dbf.getAllReservationss();
         roomTypesList = dbf.getAllRoomTypes();
-        int typeId=0;
-        int availableRooms=0;
-        
+        int typeId = 0;
+        int availableRooms = 0;
+
         for (int i = 0; i < roomTypesList.size(); i++)
         {
-           if(roomTypesList.get(i).getType().equals(roomType))
-           {
-               typeId=i;
-               i=roomTypesList.size();
-           }
-        }
-        
-        for (int i = 0; i < roomsList.size(); i++)
-        {
-            if(roomsList.get(i).getType()== roomTypesList.get(typeId).getId()){
-                availableRooms ++;
+            if (roomTypesList.get(i).getType().equals(roomType))
+            {
+                typeId = i;
+                i = roomTypesList.size();
             }
         }
-        
+
         for (int i = 0; i < roomsList.size(); i++)
         {
-           
-            if (roomsList.get(i).getType()== roomTypesList.get(typeId).getId())
+            if (roomsList.get(i).getType() == roomTypesList.get(typeId).getId())
+            {
+                availableRooms++;
+            }
+        }
+
+        for (int i = 0; i < roomsList.size(); i++)
+        {
+
+            if (roomsList.get(i).getType() == roomTypesList.get(typeId).getId())
             {
                 for (int j = 0; j < reservationsList.size(); j++)
                 {
@@ -183,18 +189,28 @@ public class Controller
                         found = true;
                         if (from.compareTo(reservationsList.get(j).getUntilDate()) == 1 || until.compareTo(reservationsList.get(j).getFromDate()) == -1)
                         {
-                            
-                        }else{availableRooms--;
-                            j = reservationsList.size();}
+                            assignedRoom = roomsList.get(i).getId();
+
+                        } else
+                        {
+                            availableRooms--;
+                            j = reservationsList.size();
+                        }
                     }
                 }
+                if(found == false)
+                {
+                    assignedRoom = roomsList.get(i).getId();
+                }
+                found = false;
             }
         }
         // found = true if we have at least 1 reservation for the specified room type in the reservationsList
         if (availableRooms == 0)
         {
             result = false;
-        }else{
+        } else
+        {
             result = true;
         }
         return result;
@@ -343,11 +359,11 @@ public class Controller
             }
             break;
         }
-        
+
         return model;
     }
-    
-     public boolean delete(String type, String input)
+
+    public boolean delete(String type, String input)
     {
         if (type.equals("reservation"))
         {
@@ -366,51 +382,52 @@ public class Controller
         }
         return false;
     }
-    
+
     public boolean saveNewClient(String id, String firstName, String lastName, String address, String country, String travelAgency, int phone,
-            String email, String password) 
+            String email, String password)
     {
         int versionNumber = 1;
         return dbf.saveNewClient(new Client(id, firstName, lastName, address, country, travelAgency, phone, email, password, versionNumber));
     }
-   
+
     public boolean confirmPayment(double amount, int index)
     {
         return dbf.confirmPayment(amount, reservationsList.get(index).getId());
     }
-    
+
     public String chosenClient(String input)
     {
-        clientsList = dbf.getAllClientss();    
+        clientsList = dbf.getAllClientss();
         for (int i = 0; i < clientsList.size(); i++)
+        {
+            if (input.contains(clientsList.get(i).getId()))
             {
-                if (input.contains(clientsList.get(i).getId()))
-                {
-                    return clientsList.get(i).getFirstName()+" "+clientsList.get(i).getLastName()+", Phone Nr.: "+clientsList.get(i).getPhone();
-                }
+                return clientsList.get(i).getFirstName() + " " + clientsList.get(i).getLastName() + ", Phone Nr.: " + clientsList.get(i).getPhone();
             }
+        }
         return "Could't select client.";
     }
-    
+
     public boolean saveNewRoomReservation(int roomId, int roomType, int resId, String resPayed, int deposit, int amountPayed,
             Date fromDate, Date untilDate, String clientId)
     {
         Room room = new Room(roomId, roomType, 1);
-        Reservation reservation= new Reservation(resId, resPayed, deposit, amountPayed, 1, clientId, fromDate, untilDate, roomId);
+        Reservation reservation = new Reservation(resId, resPayed, deposit, amountPayed, 1, clientId, fromDate, untilDate, roomId);
         return dbf.saveNewRoomReservation(reservation, room);
     }
-    
+
     public String getClientId(String input)
     {
-        clientsList = dbf.getAllClientss();    
+        clientsList = dbf.getAllClientss();
         for (int i = 0; i < clientsList.size(); i++)
+        {
+            if (input.contains(clientsList.get(i).getId()))
             {
-                if (input.contains(clientsList.get(i).getId()))
-                {
-                    return clientsList.get(i).getId();
-                }
+                return clientsList.get(i).getId();
             }
+        }
         return "Could't select client.";
     }
-}
 
+  
+}
