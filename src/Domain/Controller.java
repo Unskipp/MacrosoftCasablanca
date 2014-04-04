@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -27,6 +29,8 @@ public class Controller
     private ArrayList<Reservation> reservationsList;
     private ArrayList<RoomType> roomTypesList;
     private ArrayList<Room> roomsList;
+    private String[] vect;
+    private int assignedRoom;
 
     public Controller()
     {
@@ -38,59 +42,105 @@ public class Controller
         reservationsList = new ArrayList<Reservation>();
         roomTypesList = new ArrayList<RoomType>();
         roomsList = new ArrayList<Room>();
+        vect = null;
+
     }
 
-    public DefaultListModel display(String frame)
+    public DefaultTableModel display(String frame)
     {
         Object o = new Object();
-        DefaultListModel model = new DefaultListModel();
+        DefaultTableModel model = new DefaultTableModel();
 
         if (frame.equals("Employees"))
         {
             employeesList = dbf.getAllEmployeess();
+
+            model = setHeader("Employees");
+            vect = new String[4];
+
             for (int i = 0; i < employeesList.size(); i++)
             {
-                o = employeesList.get(i).toString();
-                model.addElement(o);
+                vect[0] = employeesList.get(i).getId();
+                vect[1] = employeesList.get(i).getFirstName();
+                vect[2] = employeesList.get(i).getLastName();
+                vect[3] = employeesList.get(i).getPosition();
+
+                model.addRow(vect);
             }
         } else if (frame.equals("Clients"))
         {
             clientsList = dbf.getAllClientss();
+
+            model = setHeader("Clients");
+            vect = new String[3];
+
             for (int i = 0; i < clientsList.size(); i++)
             {
-                o = clientsList.get(i).toString();
-                model.addElement(o);
+                vect[0] = clientsList.get(i).getId();
+                vect[1] = clientsList.get(i).getFirstName();
+                vect[2] = clientsList.get(i).getLastName();
+
+                model.addRow(vect);
             }
         } else if (frame.equals("Facilities"))
         {
             facilitiesList = dbf.getAllFacilities();
+
+            model = setHeader("Facilities");
+            vect = new String[2];
+
             for (int i = 0; i < facilitiesList.size(); i++)
             {
-                o = facilitiesList.get(i).toString();
-                model.addElement(o);
+                vect[0] = facilitiesList.get(i).getName();
+                vect[1] = Integer.toString(facilitiesList.get(i).getPrice());
+
+                model.addRow(vect);
             }
         } else if (frame.equals("Reservations"))
         {
             reservationsList = dbf.getAllReservationss();
             clientsList = dbf.getAllClientss();
+
+            model = setHeader("Reservations");
+            vect = new String[4];
+
             for (int i = 0; i < reservationsList.size(); i++)
             {
                 for (int j = 0; j < clientsList.size(); j++)
                 {
                     if (reservationsList.get(i).getClientID().equals(clientsList.get(j).getId()))
                     {
-                        o = clientsList.get(j).toString() + reservationsList.get(i).toString();
-                        model.addElement(o);
+                        vect[0] = Integer.toString(reservationsList.get(i).getId());
+                        vect[1] = clientsList.get(j).getId();
+                        vect[2] = clientsList.get(j).getFirstName();
+                        vect[3] = clientsList.get(j).getLastName();
+
+                        model.addRow(vect);
                     }
                 }
             }
         } else
         {
             roomsList = dbf.getAllRoomss();
+            roomTypesList = dbf.getAllRoomTypes();
+
+            model = setHeader("Rooms");
+            vect = new String[4];
+
             for (int i = 0; i < roomsList.size(); i++)
             {
-                o = roomsList.get(i).toString();
-                model.addElement(o);
+                for (int j = 0; j < roomTypesList.size(); j++)
+                {
+                    if (roomsList.get(i).getType() == roomTypesList.get(j).getId())
+                    {
+                        vect[0] = Integer.toString(roomsList.get(i).getId());
+                        vect[1] = roomTypesList.get(j).getType();
+                        vect[2] = Integer.toString(roomTypesList.get(j).getCapacity());
+                        vect[3] = Integer.toString(roomTypesList.get(j).getPrice());
+
+                        model.addRow(vect);
+                    }
+                }
             }
         }
 
@@ -143,8 +193,6 @@ public class Controller
 
         return result;
     }
-
-    int assignedRoom;
 
     public int getAssignedRoom()
     {
@@ -226,18 +274,93 @@ public class Controller
         roomTypesList = dbf.getAllRoomTypes();
     }
 
-    public DefaultListModel searchBy(String valueOfSearch, Object valueOfCombobox, String frame)
+    public DefaultTableModel setHeader(String criteria)
+    {
+        DefaultTableModel model = new DefaultTableModel();
+
+        switch (criteria)
+        {
+
+            case "Reservations":
+            {
+                String[] title =
+                {
+                    "Reservation ID", "Client id", "First name", "Last name"
+                };
+                model.addColumn(title[0]);
+                model.addColumn(title[1]);
+                model.addColumn(title[2]);
+                model.addColumn(title[3]);
+            }
+            break;
+            case "Rooms":
+            {
+                String[] title =
+                {
+                    "ID", "Type", "Capacity", "Price"
+                };
+
+                model.addColumn(title[0]);
+                model.addColumn(title[1]);
+                model.addColumn(title[2]);
+                model.addColumn(title[3]);
+            }
+            break;
+            case "Facilities":
+            {
+                String[] title =
+                {
+                    "Name of facility", "Price"
+                };
+                model.addColumn(title[0]);
+                model.addColumn(title[1]);
+            }
+            break;
+            case "Clients":
+            {
+                String[] title =
+                {
+                    "Client id", "First name", "Last name"
+                };
+
+                model.addColumn(title[0]);
+                model.addColumn(title[1]);
+                model.addColumn(title[2]);
+            }
+            break;
+            case "Employees":
+            {
+                String[] title =
+                {
+                    "ID", "First name", "Last name", "Position"
+                };
+                model.addColumn(title[0]);
+                model.addColumn(title[1]);
+                model.addColumn(title[2]);
+                model.addColumn(title[3]);
+            }
+            break;
+        }
+
+        return model;
+    }
+
+    public DefaultTableModel searchBy(String valueOfSearch, Object valueOfCombobox, String frame)
     {
         Object o = new Object();
         valueOfSearch.toLowerCase();
-        DefaultListModel model = new DefaultListModel();
+        DefaultTableModel model = new DefaultTableModel();
 
         switch (frame)
         {
             case "Reservations":
             {
-                if (valueOfCombobox.equals("Client ID"))
+                if (valueOfCombobox.equals("ID"))
                 {
+
+                    model = setHeader("Reservations");
+                    vect = new String[4];
+
                     for (int i = 0; i < reservationsList.size(); i++)
                     {
                         String temp = reservationsList.get(i).getClientID().toLowerCase();
@@ -246,13 +369,20 @@ public class Controller
                             if (temp.contains(valueOfSearch)
                                     && reservationsList.get(i).getClientID().toLowerCase().equals(clientsList.get(j).getId().toLowerCase()))
                             {
-                                o = clientsList.get(j).toString() + reservationsList.get(i).toString();
-                                model.addElement(o);
+                                vect[0] = Integer.toString(reservationsList.get(i).getId());
+                                vect[1] = clientsList.get(j).getId();
+                                vect[2] = clientsList.get(j).getFirstName();
+                                vect[3] = clientsList.get(j).getLastName();
+
+                                model.addRow(vect);
                             }
                         }
                     }
                 } else if (valueOfCombobox.equals("Reservation ID"))
                 {
+                    model = setHeader("Reservations");
+                    vect = new String[4];
+
                     for (int i = 0; i < reservationsList.size(); i++)
                     {
                         String temp = Integer.toString(reservationsList.get(i).getId());
@@ -262,14 +392,21 @@ public class Controller
                             {
                                 if (reservationsList.get(i).getClientID().equals(clientsList.get(j).getId()))
                                 {
-                                    o = clientsList.get(j).toString() + reservationsList.get(i).toString();
-                                    model.addElement(o);
+                                    vect[0] = Integer.toString(reservationsList.get(i).getId());
+                                    vect[1] = clientsList.get(j).getId();
+                                    vect[2] = clientsList.get(j).getFirstName();
+                                    vect[3] = clientsList.get(j).getLastName();
+
+                                    model.addRow(vect);
                                 }
                             }
                         }
                     }
-                } else if (valueOfCombobox.equals("Client name"))
+                } else if (valueOfCombobox.equals("Name"))
                 {
+                    model = setHeader("Reservations");
+                    vect = new String[4];
+
                     valueOfSearch = valueOfSearch.toLowerCase();
                     for (int i = 0; i < clientsList.size(); i++)
                     {
@@ -281,10 +418,222 @@ public class Controller
                             {
                                 if (clientsList.get(i).getId().equals(reservationsList.get(j).getClientID()))
                                 {
-                                    o = clientsList.get(i).toString() + reservationsList.get(j).toString();
-                                    model.addElement(o);
+                                    vect[0] = Integer.toString(reservationsList.get(j).getId());
+                                    vect[1] = clientsList.get(i).getId();
+                                    vect[2] = clientsList.get(i).getFirstName();
+                                    vect[3] = clientsList.get(i).getLastName();
+
+                                    model.addRow(vect);
                                 }
                             }
+                        }
+                    }
+                }
+            }
+            break;
+            case "Rooms":
+            {
+                if (valueOfCombobox.equals("ID"))
+                {
+                    model = setHeader("Rooms");
+                    vect = new String[4];
+                    valueOfSearch = valueOfSearch.toLowerCase();
+
+                    for (int i = 0; i < roomsList.size(); i++)
+                    {
+                        if (Integer.parseInt(valueOfSearch) == roomsList.get(i).getId())
+                        {
+                            for (int j = 0; j < roomTypesList.size(); j++)
+                            {
+                                if (roomsList.get(i).getType() == roomTypesList.get(j).getId())
+                                {
+                                    vect[0] = Integer.toString(roomsList.get(i).getId());
+                                    vect[1] = roomTypesList.get(j).getType();
+                                    vect[2] = Integer.toString(roomTypesList.get(j).getCapacity());
+                                    vect[3] = Integer.toString(roomTypesList.get(j).getPrice());
+
+                                    model.addRow(vect);
+                                }
+                            }
+                        }
+                    }
+                } else if (valueOfCombobox.equals("Price"))
+                {
+                    model = setHeader("Rooms");
+                    vect = new String[4];
+
+                    for (int i = 0; i < roomsList.size(); i++)
+                    {
+                        for (int j = 0; j < roomTypesList.size(); j++)
+                        {
+                            if (roomsList.get(i).getType() == roomTypesList.get(j).getId() && roomTypesList.get(j).getPrice() <= Integer.parseInt(valueOfSearch))
+                            {
+                                vect[0] = Integer.toString(roomsList.get(i).getId());
+                                vect[1] = roomTypesList.get(j).getType();
+                                vect[2] = Integer.toString(roomTypesList.get(j).getCapacity());
+                                vect[3] = Integer.toString(roomTypesList.get(j).getPrice());
+
+                                model.addRow(vect);
+                            }
+                        }
+                    }
+                } else if (valueOfCombobox.equals("Capacity"))
+                {
+                    model = setHeader("Rooms");
+                    vect = new String[4];
+
+                    for (int i = 0; i < roomsList.size(); i++)
+                    {
+                        for (int j = 0; j < roomTypesList.size(); j++)
+                        {
+                            if (roomsList.get(i).getType() == roomTypesList.get(j).getId() && roomTypesList.get(j).getCapacity() <= Integer.parseInt(valueOfSearch))
+                            {
+                                vect[0] = Integer.toString(roomsList.get(i).getId());
+                                vect[1] = roomTypesList.get(j).getType();
+                                vect[2] = Integer.toString(roomTypesList.get(j).getCapacity());
+                                vect[3] = Integer.toString(roomTypesList.get(j).getPrice());
+
+                                model.addRow(vect);
+                            }
+                        }
+                    }
+                }
+            }
+            break;
+            case "Clients":
+            {
+                if (valueOfCombobox == "ID")
+                {
+                    model = setHeader("Clients");
+                    vect = new String[3];
+
+                    for (int i = 0; i < clientsList.size(); i++)
+                    {
+                        if (clientsList.get(i).getId().contains(valueOfSearch))
+                        {
+                            vect[0] = clientsList.get(i).getId();
+                            vect[1] = clientsList.get(i).getFirstName();
+                            vect[2] = clientsList.get(i).getLastName();
+
+                            model.addRow(vect);
+                        }
+                    }
+                } else if (valueOfCombobox == "Name")
+                {
+                    model = setHeader("Clients");
+                    vect = new String[3];
+
+                    valueOfSearch = valueOfSearch.toLowerCase();
+                    for (int i = 0; i < clientsList.size(); i++)
+                    {
+                        String temp = clientsList.get(i).getFirstName().toLowerCase() + " "
+                                + clientsList.get(i).getLastName().toLowerCase();
+                        if (temp.contains(valueOfSearch))
+                        {
+                            vect[0] = clientsList.get(i).getId();
+                            vect[1] = clientsList.get(i).getFirstName();
+                            vect[2] = clientsList.get(i).getLastName();
+
+                            model.addRow(vect);
+                        }
+                    }
+                }
+            }
+            break;
+            case "Facilities":
+            {
+                if (valueOfCombobox == "Type")
+                {
+                    model = setHeader("Facilities");
+                    vect = new String[2];
+
+                    valueOfSearch = valueOfSearch.toLowerCase();
+                    for (int i = 0; i < facilitiesList.size(); i++)
+                    {
+                        if (facilitiesList.get(i).getName().toLowerCase().contains(valueOfSearch))
+                        {
+                            vect[0] = facilitiesList.get(i).getName();
+                            vect[1] = Integer.toString(facilitiesList.get(i).getPrice());
+
+                            model.addRow(vect);
+                        }
+                    }
+                } else if (valueOfCombobox == "Price")
+                {
+                    model = setHeader("Facilities");
+                    vect = new String[2];
+
+                    for (int i = 0; i < facilitiesList.size(); i++)
+                    {
+                        if (facilitiesList.get(i).getPrice() <= Integer.parseInt(valueOfSearch))
+                        {
+                            vect[0] = facilitiesList.get(i).getName();
+                            vect[1] = Integer.toString(facilitiesList.get(i).getPrice());
+
+                            model.addRow(vect);
+                        }
+                    }
+                }
+            }
+            break;
+            case "Employees":
+            {
+                if (valueOfCombobox == "ID")
+                {
+                    model = setHeader("Employees");
+                    vect = new String[4];
+
+                    valueOfSearch = valueOfSearch.toLowerCase();
+
+                    for (int i = 0; i < employeesList.size(); i++)
+                    {
+                        if (employeesList.get(i).getId().contains(valueOfSearch))
+                        {
+                            vect[0] = employeesList.get(i).getId();
+                            vect[1] = employeesList.get(i).getFirstName();
+                            vect[2] = employeesList.get(i).getLastName();
+                            vect[3] = employeesList.get(i).getPosition();
+
+                            model.addRow(vect);
+                        }
+                    }
+                } else if (valueOfCombobox == "Name")
+                {
+                    model = setHeader("Employees");
+                    vect = new String[4];
+
+                    valueOfSearch = valueOfSearch.toLowerCase();
+
+                    for (int i = 0; i < employeesList.size(); i++)
+                    {
+                        String temp = employeesList.get(i).getFirstName().toLowerCase() + " "
+                                + employeesList.get(i).getLastName().toLowerCase();
+                        if (temp.contains(valueOfSearch))
+                        {
+                            vect[0] = employeesList.get(i).getId();
+                            vect[1] = employeesList.get(i).getFirstName();
+                            vect[2] = employeesList.get(i).getLastName();
+                            vect[3] = employeesList.get(i).getPosition();
+
+                            model.addRow(vect);
+                        }
+                    }
+
+                } else if (valueOfCombobox == "Position")
+                {
+                    model = setHeader("Employees");
+                    vect = new String[4];
+
+                    for (int i = 0; i < employeesList.size(); i++)
+                    {
+                        if (employeesList.get(i).getPosition().toLowerCase().contains(valueOfSearch))
+                        {
+                            vect[0] = employeesList.get(i).getId();
+                            vect[1] = employeesList.get(i).getFirstName();
+                            vect[2] = employeesList.get(i).getLastName();
+                            vect[3] = employeesList.get(i).getPosition();
+
+                            model.addRow(vect);
                         }
                     }
                 }
@@ -294,18 +643,22 @@ public class Controller
         return model;
     }
 
-    public DefaultListModel searchByExactMatch(String valueOfSearch, Object valueOfCombobox, String frame)
+    public DefaultTableModel searchByExactMatch(String valueOfSearch, Object valueOfCombobox, String frame)
     {
         Object o = new Object();
         valueOfSearch.toLowerCase();
-        DefaultListModel model = new DefaultListModel();
+        DefaultTableModel model = new DefaultTableModel();
 
         switch (frame)
         {
             case "Reservations":
             {
-                if (valueOfCombobox.equals("Client ID"))
+                if (valueOfCombobox.equals("ID"))
                 {
+
+                    model = setHeader("Reservations");
+                    vect = new String[4];
+
                     for (int i = 0; i < reservationsList.size(); i++)
                     {
                         String temp = reservationsList.get(i).getClientID().toLowerCase();
@@ -314,13 +667,20 @@ public class Controller
                             if (temp.equals(valueOfSearch)
                                     && reservationsList.get(i).getClientID().toLowerCase().equals(clientsList.get(j).getId().toLowerCase()))
                             {
-                                o = clientsList.get(j).toString() + reservationsList.get(i).toString();
-                                model.addElement(o);
+                                vect[0] = Integer.toString(reservationsList.get(i).getId());
+                                vect[1] = clientsList.get(j).getId();
+                                vect[2] = clientsList.get(j).getFirstName();
+                                vect[3] = clientsList.get(j).getLastName();
+
+                                model.addRow(vect);
                             }
                         }
                     }
                 } else if (valueOfCombobox.equals("Reservation ID"))
                 {
+                    model = setHeader("Reservations");
+                    vect = new String[4];
+
                     for (int i = 0; i < reservationsList.size(); i++)
                     {
                         String temp = Integer.toString(reservationsList.get(i).getId());
@@ -330,14 +690,21 @@ public class Controller
                             {
                                 if (reservationsList.get(i).getClientID().equals(clientsList.get(j).getId()))
                                 {
-                                    o = clientsList.get(j).toString() + reservationsList.get(i).toString();
-                                    model.addElement(o);
+                                    vect[0] = Integer.toString(reservationsList.get(i).getId());
+                                    vect[1] = clientsList.get(j).getId();
+                                    vect[2] = clientsList.get(j).getFirstName();
+                                    vect[3] = clientsList.get(j).getLastName();
+
+                                    model.addRow(vect);
                                 }
                             }
                         }
                     }
-                } else if (valueOfCombobox.equals("Client name"))
+                } else if (valueOfCombobox.equals("Name"))
                 {
+                    model = setHeader("Reservations");
+                    vect = new String[4];
+
                     valueOfSearch = valueOfSearch.toLowerCase();
                     for (int i = 0; i < clientsList.size(); i++)
                     {
@@ -349,8 +716,12 @@ public class Controller
                             {
                                 if (clientsList.get(i).getId().equals(reservationsList.get(j).getClientID()))
                                 {
-                                    o = clientsList.get(i).toString() + reservationsList.get(j).toString();
-                                    model.addElement(o);
+                                    vect[0] = Integer.toString(reservationsList.get(j).getId());
+                                    vect[1] = clientsList.get(i).getId();
+                                    vect[2] = clientsList.get(i).getFirstName();
+                                    vect[3] = clientsList.get(i).getLastName();
+
+                                    model.addRow(vect);
                                 }
                             }
                         }
@@ -358,8 +729,215 @@ public class Controller
                 }
             }
             break;
-        }
+            case "Rooms":
+            {
+                if (valueOfCombobox.equals("ID"))
+                {
+                    model = setHeader("Rooms");
+                    vect = new String[4];
+                    valueOfSearch = valueOfSearch.toLowerCase();
 
+                    for (int i = 0; i < roomsList.size(); i++)
+                    {
+                        if (Integer.parseInt(valueOfSearch) == roomsList.get(i).getId())
+                        {
+                            for (int j = 0; j < roomTypesList.size(); j++)
+                            {
+                                if (roomsList.get(i).getType() == roomTypesList.get(j).getId())
+                                {
+                                    vect[0] = Integer.toString(roomsList.get(i).getId());
+                                    vect[1] = roomTypesList.get(j).getType();
+                                    vect[2] = Integer.toString(roomTypesList.get(j).getCapacity());
+                                    vect[3] = Integer.toString(roomTypesList.get(j).getPrice());
+
+                                    model.addRow(vect);
+                                }
+                            }
+                        }
+                    }
+                } else if (valueOfCombobox.equals("Price"))
+                {
+                    model = setHeader("Rooms");
+                    vect = new String[4];
+
+                    for (int i = 0; i < roomsList.size(); i++)
+                    {
+                        for (int j = 0; j < roomTypesList.size(); j++)
+                        {
+                            if (roomsList.get(i).getType() == roomTypesList.get(j).getId() && roomTypesList.get(j).getPrice() == Integer.parseInt(valueOfSearch))
+                            {
+                                vect[0] = Integer.toString(roomsList.get(i).getId());
+                                vect[1] = roomTypesList.get(j).getType();
+                                vect[2] = Integer.toString(roomTypesList.get(j).getCapacity());
+                                vect[3] = Integer.toString(roomTypesList.get(j).getPrice());
+
+                                model.addRow(vect);
+                            }
+                        }
+                    }
+                } else if (valueOfCombobox.equals("Capacity"))
+                {
+                    model = setHeader("Rooms");
+                    vect = new String[4];
+
+                    for (int i = 0; i < roomsList.size(); i++)
+                    {
+                        for (int j = 0; j < roomTypesList.size(); j++)
+                        {
+                          if (roomsList.get(i).getType() == roomTypesList.get(j).getId() && roomTypesList.get(j).getCapacity()== Integer.parseInt(valueOfSearch))
+                            {
+                                vect[0] = Integer.toString(roomsList.get(i).getId());
+                                vect[1] = roomTypesList.get(j).getType();
+                                vect[2] = Integer.toString(roomTypesList.get(j).getCapacity());
+                                vect[3] = Integer.toString(roomTypesList.get(j).getPrice());
+
+                                model.addRow(vect);
+                            }
+                        }
+                    }
+                }
+            }
+            break;
+            case "Clients":
+            {
+                if (valueOfCombobox == "ID")
+                {
+                    model = setHeader("Clients");
+                    vect = new String[3];
+
+                    for (int i = 0; i < clientsList.size(); i++)
+                    {
+                        if (clientsList.get(i).getId().equals(valueOfSearch))
+                        {
+                            vect[0] = clientsList.get(i).getId();
+                            vect[1] = clientsList.get(i).getFirstName();
+                            vect[2] = clientsList.get(i).getLastName();
+
+                            model.addRow(vect);
+                        }
+                    }
+                } else if (valueOfCombobox == "Name")
+                {
+                    model = setHeader("Clients");
+                    vect = new String[3];
+
+                    valueOfSearch = valueOfSearch.toLowerCase();
+                    for (int i = 0; i < clientsList.size(); i++)
+                    {
+                        String temp = clientsList.get(i).getFirstName().toLowerCase() + " "
+                                + clientsList.get(i).getLastName().toLowerCase();
+                        if (temp.equals(valueOfSearch))
+                        {
+                            vect[0] = clientsList.get(i).getId();
+                            vect[1] = clientsList.get(i).getFirstName();
+                            vect[2] = clientsList.get(i).getLastName();
+
+                            model.addRow(vect);
+                        }
+                    }
+                }
+            }
+            break;
+            case "Facilities":
+            {
+                if (valueOfCombobox == "Type")
+                {
+                    model = setHeader("Facilities");
+                    vect = new String[2];
+
+                    valueOfSearch = valueOfSearch.toLowerCase();
+                    for (int i = 0; i < facilitiesList.size(); i++)
+                    {
+                        if (facilitiesList.get(i).getName().toLowerCase().equals(valueOfSearch))
+                        {
+                            vect[0] = facilitiesList.get(i).getName();
+                            vect[1] = Integer.toString(facilitiesList.get(i).getPrice());
+
+                            model.addRow(vect);
+                        }
+                    }
+                } else if (valueOfCombobox == "Price")
+                {
+                    model = setHeader("Facilities");
+                    vect = new String[2];
+
+                    for (int i = 0; i < facilitiesList.size(); i++)
+                    {
+                        if (facilitiesList.get(i).getPrice() == Integer.parseInt(valueOfSearch))
+                        {
+                            vect[0] = facilitiesList.get(i).getName();
+                            vect[1] = Integer.toString(facilitiesList.get(i).getPrice());
+
+                            model.addRow(vect);
+                        }
+                    }
+                }
+            }
+            break;
+            case "Employees":
+            {
+                if (valueOfCombobox == "ID")
+                {
+                    model = setHeader("Employees");
+                    vect = new String[4];
+
+                    valueOfSearch = valueOfSearch.toLowerCase();
+
+                    for (int i = 0; i < employeesList.size(); i++)
+                    {
+                        if (employeesList.get(i).getId().equals(valueOfSearch))
+                        {
+                            vect[0] = employeesList.get(i).getId();
+                            vect[1] = employeesList.get(i).getFirstName();
+                            vect[2] = employeesList.get(i).getLastName();
+                            vect[3] = employeesList.get(i).getPosition();
+
+                            model.addRow(vect);
+                        }
+                    }
+                } else if (valueOfCombobox == "Name")
+                {
+                    model = setHeader("Employees");
+                    vect = new String[4];
+
+                    valueOfSearch = valueOfSearch.toLowerCase();
+
+                    for (int i = 0; i < employeesList.size(); i++)
+                    {
+                        String temp = employeesList.get(i).getFirstName().toLowerCase() + " "
+                                + employeesList.get(i).getLastName().toLowerCase();
+                        if (temp.equals(valueOfSearch))
+                        {
+                            vect[0] = employeesList.get(i).getId();
+                            vect[1] = employeesList.get(i).getFirstName();
+                            vect[2] = employeesList.get(i).getLastName();
+                            vect[3] = employeesList.get(i).getPosition();
+
+                            model.addRow(vect);
+                        }
+                    }
+
+                } else if (valueOfCombobox == "Position")
+                {
+                    model = setHeader("Employees");
+                    vect = new String[4];
+
+                    for (int i = 0; i < employeesList.size(); i++)
+                    {
+                        if (employeesList.get(i).getPosition().toLowerCase().equals(valueOfSearch))
+                        {
+                            vect[0] = employeesList.get(i).getId();
+                            vect[1] = employeesList.get(i).getFirstName();
+                            vect[2] = employeesList.get(i).getLastName();
+                            vect[3] = employeesList.get(i).getPosition();
+
+                            model.addRow(vect);
+                        }
+                    }
+                }
+            }
+            break;
+        }
         return model;
     }
 
@@ -369,8 +947,8 @@ public class Controller
         {
             for (int i = 0; i < reservationsList.size(); i++)
             {
-                if (input.contains(reservationsList.get(i).getClientID())
-                        && input.contains(Integer.toString(reservationsList.get(i).getId())))
+                System.out.println(reservationsList.get(i).getId());
+                if (Integer.parseInt(input) == reservationsList.get(i).getId())
                 {
                     if (dbf.delete(type, reservationsList.get(i).getId()))
                     {
@@ -400,7 +978,7 @@ public class Controller
         clientsList = dbf.getAllClientss();
         for (int i = 0; i < clientsList.size(); i++)
         {
-            if (input.contains(clientsList.get(i).getId()))
+            if (input.equals(clientsList.get(i).getId()))
             {
                 return clientsList.get(i).getFirstName() + " " + clientsList.get(i).getLastName() + ", Phone Nr.: " + clientsList.get(i).getPhone();
             }
@@ -419,7 +997,7 @@ public class Controller
         String roomTypeString = null;
         for (int i = 0; i < roomTypesList.size(); i++)
         {
-            if (roomTypesList.get(i).getId()==getRoomTypeAsInt(roomType))
+            if (roomTypesList.get(i).getId() == getRoomTypeAsInt(roomType))
             {
                 roomTypeString = roomTypesList.get(i).getType();
                 i = roomTypesList.size();
@@ -433,6 +1011,7 @@ public class Controller
         }
         return false;
     }
+
     private int getRoomTypeAsInt(String roomType)
     {
         if (roomType.equals("Family room"))
@@ -472,10 +1051,8 @@ public class Controller
                     return false;
                 }
             }
-            
+
         }
         return true;
     }
 }
-
-

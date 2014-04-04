@@ -24,7 +24,7 @@ public class ListFrames extends javax.swing.JFrame
      */
     private Controller controller;
     private String frameName;
-    
+
     public ListFrames()
     {
         initComponents();
@@ -36,31 +36,63 @@ public class ListFrames extends javax.swing.JFrame
         this();
         frameName = frame;
         this.controller = controller;
-
         if (frame.equals("Employees"))
         {
-            jList2.setModel(controller.display(frame));
-        } else if (frame.equals("Clients"))
-        {
-            jList2.setModel(controller.display(frame));
-        } else if (frame.equals("Facilities"))
-        {
-            jList2.setModel(controller.display(frame));
-        } else if (frame.equals("Reservations"))
-        {
-            jList2.setModel(controller.display(frame));
+            jTable1.setModel(controller.display(frame));
             Object o = new Object();
             DefaultComboBoxModel model = new DefaultComboBoxModel();
-            o = "Client name";
+            o = "ID";
             model.addElement(o);
-            o = "Client ID";
+            o = "Name";
+            model.addElement(o);
+            o = "Position";
+            model.addElement(o);
+            jComboBoxType1.setModel(model);
+        } else if (frame.equals("Clients"))
+        {
+            jTable1.setModel(controller.display(frame));
+            Object o = new Object();
+            DefaultComboBoxModel model = new DefaultComboBoxModel();
+            o = "ID";
+            model.addElement(o);
+            o = "Name";
+            model.addElement(o);
+            jComboBoxType1.setModel(model);
+
+        } else if (frame.equals("Facilities"))
+        {
+            jTable1.setModel(controller.display(frame));
+            Object o = new Object();
+            DefaultComboBoxModel model = new DefaultComboBoxModel();
+            o = "Type";
+            model.addElement(o);
+            o = "Price";
+            model.addElement(o);
+            jComboBoxType1.setModel(model);
+        } else if (frame.equals("Reservations"))
+        {
+            jTable1.setModel(controller.display(frame));
+            Object o = new Object();
+            DefaultComboBoxModel model = new DefaultComboBoxModel();
+            o = "Name";
+            model.addElement(o);
+            o = "ID";
             model.addElement(o);
             o = "Reservation ID";
             model.addElement(o);
             jComboBoxType1.setModel(model);
         } else
         {
-            jList2.setModel(controller.display("Rooms"));
+            jTable1.setModel(controller.display("Rooms"));
+            Object o = new Object();
+            DefaultComboBoxModel model = new DefaultComboBoxModel();
+            o = "ID";
+            model.addElement(o);
+            o = "Capacity";
+            model.addElement(o);
+            o = "Price";
+            model.addElement(o);
+            jComboBoxType1.setModel(model);
         }
     }
 
@@ -76,13 +108,19 @@ public class ListFrames extends javax.swing.JFrame
 
         jButtonExactMatch = new javax.swing.JButton();
         jComboBoxType1 = new javax.swing.JComboBox();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldSearch1 = new javax.swing.JTextField();
         jButtonDelete = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButtonConfirmPayment = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable()
+        {
+            public boolean isCellEditable(int rowIndex,int colIndex)
+            {
+                return false;
+            }
+        };
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -111,14 +149,6 @@ public class ListFrames extends javax.swing.JFrame
 
         jComboBoxType1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jList2.setModel(new javax.swing.AbstractListModel()
-        {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(jList2);
-
         jLabel2.setText("Search by");
 
         jTextFieldSearch1.addKeyListener(new java.awt.event.KeyAdapter()
@@ -146,6 +176,15 @@ public class ListFrames extends javax.swing.JFrame
                 jButtonConfirmPaymentActionPerformed(evt);
             }
         });
+
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
 
         jMenu1.setText("HOME");
         jMenu1.addMouseListener(new java.awt.event.MouseAdapter()
@@ -253,25 +292,25 @@ public class ListFrames extends javax.swing.JFrame
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(69, 69, 69)
+                        .addComponent(jComboBoxType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(69, 69, 69)
-                                .addComponent(jComboBoxType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jTextFieldSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButtonExactMatch))
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(149, 149, 149)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonConfirmPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47))
+                            .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonConfirmPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(47, 47, 47))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jTextFieldSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(126, 126, 126)
+                                .addComponent(jButtonExactMatch)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(90, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,10 +330,10 @@ public class ListFrames extends javax.swing.JFrame
                         .addGap(26, 26, 26)
                         .addComponent(jButtonConfirmPayment)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -327,31 +366,63 @@ public class ListFrames extends javax.swing.JFrame
 
     private void jMenuRommsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuRommsActionPerformed
     {//GEN-HEADEREND:event_jMenuRommsActionPerformed
-        jList2.setModel(controller.display("Rooms"));
-        frameName="Rooms";
+        jTable1.setModel(controller.display("Rooms"));
+        Object o = new Object();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        o = "ID";
+        model.addElement(o);
+        o = "Capacity";
+        model.addElement(o);
+        o = "Price";
+        model.addElement(o);
+        jComboBoxType1.setModel(model);
+        frameName = "Rooms";
     }//GEN-LAST:event_jMenuRommsActionPerformed
 
     private void jMenuClientsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuClientsActionPerformed
     {//GEN-HEADEREND:event_jMenuClientsActionPerformed
-        jList2.setModel(controller.display("Clients"));
-        frameName="Clients";
+        jTable1.setModel(controller.display("Clients"));
+        Object o = new Object();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        o = "ID";
+        model.addElement(o);
+        o = "Name";
+        model.addElement(o);
+        jComboBoxType1.setModel(model);
+        frameName = "Clients";
     }//GEN-LAST:event_jMenuClientsActionPerformed
 
     private void jMenuFacilitiesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuFacilitiesActionPerformed
     {//GEN-HEADEREND:event_jMenuFacilitiesActionPerformed
-        jList2.setModel(controller.display("Facilities"));
-        frameName="Facilities";
+        jTable1.setModel(controller.display("Facilities"));
+        Object o = new Object();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        o = "Type";
+        model.addElement(o);
+        o = "Price";
+        model.addElement(o);
+        jComboBoxType1.setModel(model);
+        frameName = "Facilities";
     }//GEN-LAST:event_jMenuFacilitiesActionPerformed
 
     private void jMenuEmployeesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuEmployeesActionPerformed
     {//GEN-HEADEREND:event_jMenuEmployeesActionPerformed
-        jList2.setModel(controller.display("Employees"));
-        frameName="Employees";
+        jTable1.setModel(controller.display("Employees"));
+        Object o = new Object();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        o = "ID";
+        model.addElement(o);
+        o = "Name";
+        model.addElement(o);
+        o = "Position";
+        model.addElement(o);
+        jComboBoxType1.setModel(model);
+        frameName = "Employees";
     }//GEN-LAST:event_jMenuEmployeesActionPerformed
 
     private void jMenuReservationsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuReservationsActionPerformed
     {//GEN-HEADEREND:event_jMenuReservationsActionPerformed
-        jList2.setModel(controller.display("Reservations"));
+        jTable1.setModel(controller.display("Reservations"));
         Object o = new Object();
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         o = "Client name";
@@ -366,15 +437,15 @@ public class ListFrames extends javax.swing.JFrame
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonDeleteActionPerformed
     {//GEN-HEADEREND:event_jButtonDeleteActionPerformed
-        if (jList2.getSelectedIndex() == -1)
+        if (jTable1.getSelectedRow() == -1)
         {
             jLabel1.setText("you have to select a reservation from the list!");
         } else
         {
-
-            if (controller.delete("reservation", jList2.getSelectedValue().toString()))
+            System.out.println(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+            if (controller.delete("reservation", jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString()))
             {
-                jList2.setModel(controller.display("Reservations"));
+                jTable1.setModel(controller.display("Reservations"));
                 jLabel1.setText("reservation successfully deleted");
             } else
             {
@@ -385,30 +456,30 @@ public class ListFrames extends javax.swing.JFrame
 
     private void jButtonConfirmPaymentActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonConfirmPaymentActionPerformed
     {//GEN-HEADEREND:event_jButtonConfirmPaymentActionPerformed
-        if (jList2.getSelectedIndex() == -1)
-        {
-            jLabel1.setText("you have to select a reservation from the list!");
-        } else
-        {
-            double amount = -1;
-            while (amount < 0)
-            {
-                try
-                {
-                    amount = Double.parseDouble(JOptionPane.showInputDialog("Select amount:"));
-                } catch (java.lang.NumberFormatException ex)
-                {
-                    System.out.println(ex.getMessage());
-                }
-            }
-            if (controller.confirmPayment(amount, jList2.getSelectedIndex()))
-            {
-                jLabel1.setText("payment confirmed");
-            } else
-            {
-                jLabel1.setText("payment was not confirmed");
-            }
-        }
+//        if (jTable1.getSelectedIndex() == -1)
+//        {
+//            jLabel1.setText("you have to select a reservation from the list!");
+//        } else
+//        {
+//            double amount = -1;
+//            while (amount < 0)
+//            {
+//                try
+//                {
+//                    amount = Double.parseDouble(JOptionPane.showInputDialog("Select amount:"));
+//                } catch (java.lang.NumberFormatException ex)
+//                {
+//                    System.out.println(ex.getMessage());
+//                }
+//            }
+//            if (controller.confirmPayment(amount, jTable1.getSelectedIndex()))
+//            {
+//                jLabel1.setText("payment confirmed");
+//            } else
+//            {
+//                jLabel1.setText("payment was not confirmed");
+//            }
+//        }
     }//GEN-LAST:event_jButtonConfirmPaymentActionPerformed
 
     private void jTextFieldSearch1KeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTextFieldSearch1KeyReleased
@@ -417,9 +488,11 @@ public class ListFrames extends javax.swing.JFrame
         String valueOfSearch = jTextFieldSearch1.getText();
         if (!"".equals(valueOfSearch) && valueOfSearch != null)
         {
-            jList2.setModel(controller.searchBy(valueOfSearch, jComboBoxType1.getSelectedItem(), frameName));
+            jTable1.setModel(controller.searchBy(valueOfSearch, jComboBoxType1.getSelectedItem(), frameName));
+        } else
+        {
+            jTable1.setModel(controller.display(frameName));
         }
-        else jList2.setModel(controller.display(frameName));
     }//GEN-LAST:event_jTextFieldSearch1KeyReleased
 
     private void jButtonExactMatchActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonExactMatchActionPerformed
@@ -428,10 +501,16 @@ public class ListFrames extends javax.swing.JFrame
         String valueOfSearch = jTextFieldSearch1.getText();
         if (!"".equals(valueOfSearch) && valueOfSearch != null)
         {
-            jList2.setModel(controller.searchByExactMatch(valueOfSearch, jComboBoxType1.getSelectedItem(), frameName));
+            jTable1.setModel(controller.searchByExactMatch(valueOfSearch, jComboBoxType1.getSelectedItem(), frameName));
         }
-        else jList2.setModel(controller.display(frameName));
+        else jTable1.setModel(controller.display(frameName));
     }//GEN-LAST:event_jButtonExactMatchActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jTable1MouseClicked
+    {//GEN-HEADEREND:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        System.out.println(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), jTable1.getSelectedColumn()).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -485,7 +564,6 @@ public class ListFrames extends javax.swing.JFrame
     private javax.swing.JComboBox jComboBoxType1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList jList2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -500,7 +578,8 @@ public class ListFrames extends javax.swing.JFrame
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuReservations;
     private javax.swing.JMenuItem jMenuRomms;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextFieldSearch1;
     // End of variables declaration//GEN-END:variables
 }

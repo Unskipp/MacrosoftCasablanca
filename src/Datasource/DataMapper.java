@@ -112,7 +112,6 @@ public class DataMapper
                 System.out.println(e.getMessage());
             }
         }
-        System.out.println(empList.toString());
         return empList;
     }
 
