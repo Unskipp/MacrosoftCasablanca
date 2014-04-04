@@ -784,25 +784,48 @@ public class Room extends javax.swing.JFrame
         jTextAreaRoomInfo.setText(controller.returnDataAboutSelectedRoom(jComboBoxRoomType.getSelectedItem().toString()));
     }//GEN-LAST:event_jComboBoxRoomTypeItemStateChanged
 
-    
 
     private void jButtonBookActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonBookActionPerformed
     {//GEN-HEADEREND:event_jButtonBookActionPerformed
 
         // jPanel4.setVisible(false);
         // jPanel3.setVisible(true);
-
         java.util.Date utilFrom = jDateChooser1.getDate();
         java.sql.Date from = new java.sql.Date(utilFrom.getTime());
         java.util.Date utilUntil = jDateChooser2.getDate();
+
+        Calendar earlier = jDateChooser1.getCalendar();
+        Calendar later = jDateChooser2.getCalendar();
+        int tempDifference = 0;
+        int difference = 0;
+        jLabel13.setForeground(Color.black);
+        jLabel13.setText("possible");
+        tempDifference = 365 * (later.get(Calendar.YEAR) - earlier.get(Calendar.YEAR));
+        difference += tempDifference;
+
+        earlier.add(Calendar.DAY_OF_YEAR, tempDifference);
+        tempDifference = later.get(Calendar.DAY_OF_YEAR) - earlier.get(Calendar.DAY_OF_YEAR);
+        difference += tempDifference;
+
+        earlier.add(Calendar.DAY_OF_YEAR, tempDifference);
+
+        jTextFieldFinalPrice.setText(difference * controller.returnPriceAboutSelectedRoom(jComboBoxRoomType.getSelectedItem().toString()) + ""); //move the price to different method cause right now it's being calculated on check availability press
+        jTextFieldRoomId.setText("" + controller.getAssignedRoom());
         java.sql.Date until = new java.sql.Date(utilUntil.getTime());
-        if (controller.saveNewRoomReservation(Integer.parseInt(jTextFieldRoomId.getText()), jComboBox1.getSelectedItem().toString(), 1, "N", Integer.parseInt(jTextFieldFinalPrice.getText()),
-                0, from, until, clientId))
+        if (controller.roomIsAvailable(Integer.parseInt(jTextFieldRoomId.getText().toString()), jDateChooser1.getCalendar(), jDateChooser2.getCalendar()))
         {
-            System.out.println("Booking created!!!!");
+
+            if (controller.saveNewRoomReservation(Integer.parseInt(jTextFieldRoomId.getText()), jComboBox1.getSelectedItem().toString(), 1, "N", Integer.parseInt(jTextFieldFinalPrice.getText()),
+                    0, from, until, clientId))
+            {
+                System.out.println("Booking created!!!!");
+            } else
+            {
+                System.out.println("Booking failed!");
+            }
         } else
         {
-            System.out.println("Booking failed!");
+            System.out.println("failed");
         }
         jTextFieldId.setText(null);
         jTextFieldFirstName.setText(null);
@@ -813,6 +836,7 @@ public class Room extends javax.swing.JFrame
         jTextFieldTelephone.setText(null);
         jTextFieldEmail.setText(null);
         jTextFieldPassword.setText(null);
+        jTextFieldRoomId.setText(null);
 
 
     }//GEN-LAST:event_jButtonBookActionPerformed

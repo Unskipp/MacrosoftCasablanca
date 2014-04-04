@@ -425,9 +425,8 @@ public class Controller
                 i = roomTypesList.size();
             }
         }
-        if (isAvailable(d2, d2, roomTypeString))
+        if (isAvailable(d1, d2, roomTypeString))
         {
-
             Room room = new Room(roomId, getRoomTypeAsInt(roomType), 1);
             Reservation reservation = new Reservation(resId, resPayed, deposit, amountPayed, 1, clientId, fromDate, untilDate, roomId);
             return dbf.saveNewRoomReservation(reservation, room);
