@@ -801,18 +801,22 @@ public class Room extends javax.swing.JFrame
     private void jButtonBookActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonBookActionPerformed
     {//GEN-HEADEREND:event_jButtonBookActionPerformed
 
-       // jPanel4.setVisible(false);
+        // jPanel4.setVisible(false);
         // jPanel3.setVisible(true);
         int roomType = getRoomTypeAsInt();
-        
 
         java.util.Date utilFrom = jDateChooser1.getDate();
         java.sql.Date from = new java.sql.Date(utilFrom.getTime());
         java.util.Date utilUntil = jDateChooser2.getDate();
         java.sql.Date until = new java.sql.Date(utilUntil.getTime());
-        controller.saveNewRoomReservation(Integer.parseInt(jTextFieldRoomId.getText()), roomType, 1, "N", Integer.parseInt(jTextFieldFinalPrice.getText()),
-                0, from, until, clientId);
-        System.out.println("Booking created!!!!");
+        if (controller.saveNewRoomReservation(Integer.parseInt(jTextFieldRoomId.getText()), roomType, 1, "N", Integer.parseInt(jTextFieldFinalPrice.getText()),
+                0, from, until, clientId))
+        {
+            System.out.println("Booking created!!!!");
+        } else
+        {
+            System.out.println("Booking failed!");
+        }
         jTextFieldId.setText(null);
         jTextFieldFirstName.setText(null);
         jTextFieldLastName.setText(null);
@@ -822,7 +826,7 @@ public class Room extends javax.swing.JFrame
         jTextFieldTelephone.setText(null);
         jTextFieldEmail.setText(null);
         jTextFieldPassword.setText(null);
-        
+
 
     }//GEN-LAST:event_jButtonBookActionPerformed
 
