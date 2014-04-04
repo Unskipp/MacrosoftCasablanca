@@ -145,10 +145,12 @@ public class Controller
     }
 
     int assignedRoom;
+
     public int getAssignedRoom()
     {
         return assignedRoom;
     }
+
     public boolean isAvailable(Calendar from, Calendar until, String roomType)
     {
 
@@ -177,20 +179,18 @@ public class Controller
             }
         }
 
-        for (int i = 0; i < roomsList.size(); i++)
+        for (Room roomsList1 : roomsList)
         {
-
-            if (roomsList.get(i).getType() == roomTypesList.get(typeId).getId())
+            if (roomsList1.getType() == roomTypesList.get(typeId).getId())
             {
                 for (int j = 0; j < reservationsList.size(); j++)
                 {
-                    if (roomsList.get(i).getId() == reservationsList.get(j).getRoomID())
+                    if (roomsList1.getId() == reservationsList.get(j).getRoomID())
                     {
                         found = true;
                         if (from.compareTo(reservationsList.get(j).getUntilDate()) == 1 || until.compareTo(reservationsList.get(j).getFromDate()) == -1)
                         {
-                            assignedRoom = roomsList.get(i).getId();
-
+                            assignedRoom = roomsList1.getId();
                         } else
                         {
                             availableRooms--;
@@ -198,9 +198,9 @@ public class Controller
                         }
                     }
                 }
-                if(found == false)
+                if (found == false)
                 {
-                    assignedRoom = roomsList.get(i).getId();
+                    assignedRoom = roomsList1.getId();
                 }
                 found = false;
             }
@@ -411,9 +411,28 @@ public class Controller
     public boolean saveNewRoomReservation(int roomId, int roomType, int resId, String resPayed, int deposit, int amountPayed,
             Date fromDate, Date untilDate, String clientId)
     {
-        Room room = new Room(roomId, roomType, 1);
-        Reservation reservation = new Reservation(resId, resPayed, deposit, amountPayed, 1, clientId, fromDate, untilDate, roomId);
-        return dbf.saveNewRoomReservation(reservation, room);
+
+        String roomTypeString = null;
+        for (RoomType roomTypesList1 : roomTypesList)
+        {
+            if (roomType == roomTypesList1.getId())
+            {
+                roomTypeString = roomTypesList1.getType();
+                break;
+            }
+        }
+        Calendar d1 = Calendar.getInstance();
+        d1.setTime(fromDate);
+        Calendar d2 = Calendar.getInstance();
+        d1.setTime(untilDate);
+        if (isAvailable(d1, d2, roomTypeString))
+        {
+
+            Room room = new Room(roomId, roomType, 1);
+            Reservation reservation = new Reservation(resId, resPayed, deposit, amountPayed, 1, clientId, fromDate, untilDate, roomId);
+            return dbf.saveNewRoomReservation(reservation, room);
+        }
+        return false;
     }
 
     public String getClientId(String input)
@@ -429,5 +448,4 @@ public class Controller
         return "Could't select client.";
     }
 
-  
 }

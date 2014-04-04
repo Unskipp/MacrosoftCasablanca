@@ -784,23 +784,28 @@ public class Room extends javax.swing.JFrame
         jTextAreaRoomInfo.setText(controller.returnDataAboutSelectedRoom(jComboBoxRoomType.getSelectedItem().toString()));
     }//GEN-LAST:event_jComboBoxRoomTypeItemStateChanged
 
+    private int getRoomTypeAsInt()
+    {
+        if (jComboBoxRoomType.getSelectedItem().toString().equals("Family room"))
+        {
+            return 1;
+        } else if (jComboBoxRoomType.getSelectedItem().toString().equals("Single room"))
+        {
+            return 2;
+        } else
+        {
+            return 3;
+        }
+    }
+
     private void jButtonBookActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonBookActionPerformed
     {//GEN-HEADEREND:event_jButtonBookActionPerformed
 
        // jPanel4.setVisible(false);
         // jPanel3.setVisible(true);
-        int roomType;
-        if (jComboBoxRoomType.getSelectedItem().toString().equals("Family room"))
-        {
-            roomType = 1;
-        } else if (jComboBoxRoomType.getSelectedItem().toString().equals("Single room"))
-        {
-            roomType = 2;
-        } else
-        {
-            roomType = 3;
-        }
+        int roomType = getRoomTypeAsInt();
         
+
         java.util.Date utilFrom = jDateChooser1.getDate();
         java.sql.Date from = new java.sql.Date(utilFrom.getTime());
         java.util.Date utilUntil = jDateChooser2.getDate();
@@ -817,8 +822,7 @@ public class Room extends javax.swing.JFrame
         jTextFieldTelephone.setText(null);
         jTextFieldEmail.setText(null);
         jTextFieldPassword.setText(null);
-        //      public boolean saveNewRoomReservation(int roomId, int roomType, int resId, String resPayed, int deposit, int amountPayed,
-        //        Date fromDate, Date untilDate, String clientId)
+        
 
     }//GEN-LAST:event_jButtonBookActionPerformed
 
@@ -862,7 +866,7 @@ public class Room extends javax.swing.JFrame
                 earlier.add(Calendar.DAY_OF_YEAR, tempDifference);
 
                 jTextFieldFinalPrice.setText(difference * controller.returnPriceAboutSelectedRoom(jComboBoxRoomType.getSelectedItem().toString()) + ""); //move the price to different method cause right now it's being calculated on check availability press
-                jTextFieldRoomId.setText(""+controller.getAssignedRoom());
+                jTextFieldRoomId.setText("" + controller.getAssignedRoom());
             } else
             {
                 jLabel13.setForeground(Color.red);
@@ -944,7 +948,7 @@ public class Room extends javax.swing.JFrame
         jButton4.setVisible(false);
         jPanel4.setVisible(false);
         jPanel3.setVisible(true);
-       
+
         clientId = jTextFieldId.getText();
     }//GEN-LAST:event_jButton1ActionPerformed
 
