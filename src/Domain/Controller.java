@@ -412,20 +412,11 @@ public class Controller
             Date fromDate, Date untilDate, String clientId)
     {
 
-        String roomTypeString = null;
-        for (RoomType roomTypesList1 : roomTypesList)
-        {
-            if (roomType == roomTypesList1.getId())
-            {
-                roomTypeString = roomTypesList1.getType();
-                break;
-            }
-        }
         Calendar d1 = Calendar.getInstance();
         d1.setTime(fromDate);
         Calendar d2 = Calendar.getInstance();
         d1.setTime(untilDate);
-        if (isAvailable(d1, d2, roomTypeString))
+        if (roomIsAvailable(roomId, d1, d2))
         {
 
             Room room = new Room(roomId, roomType, 1);
@@ -448,4 +439,22 @@ public class Controller
         return "Could't select client.";
     }
 
+    public boolean roomIsAvailable(int assignedRoom, Calendar from, Calendar until)
+    {
+        getAllReservations();
+        for (int j = 0; j < reservationsList.size(); j++)
+        {
+            if (assignedRoom == reservationsList.get(j).getRoomID())
+            {
+                if (!(from.compareTo(reservationsList.get(j).getUntilDate()) == 1 || until.compareTo(reservationsList.get(j).getFromDate()) == -1))
+                {
+                    return false;
+                }
+            }
+            
+        }
+        return true;
+    }
 }
+
+
