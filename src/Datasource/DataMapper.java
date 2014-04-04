@@ -549,7 +549,6 @@ public class DataMapper
     {
         int rowsInsertedInReservations = 0;
         int rowsInsertedInRoomReservations = 0;
-        int rowsInsertedInRooms = 0;
         int rowsInsertedInClientsReservations = 0;
 
         String SQLString1
@@ -617,7 +616,7 @@ public class DataMapper
                 System.out.println(e.getMessage());
             }
         }
-        return rowsInsertedInReservations == 1 && rowsInsertedInRoomReservations == 1 && rowsInsertedInRooms == 1 && rowsInsertedInClientsReservations == 1;
+        return rowsInsertedInReservations == 1 && rowsInsertedInRoomReservations == 1 &&  rowsInsertedInClientsReservations == 1;
     }
 
     public ArrayList<FacilityReservation> getFacilityReservationsBy(Connection con, String searchCriteria, String value)

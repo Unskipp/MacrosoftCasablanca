@@ -408,7 +408,7 @@ public class Controller
         return "Could't select client.";
     }
 
-    public boolean saveNewRoomReservation(int roomId, int roomType, int resId, String resPayed, int deposit, int amountPayed,
+    public boolean saveNewRoomReservation(int roomId, String roomType, int resId, String resPayed, int deposit, int amountPayed,
             Date fromDate, Date untilDate, String clientId)
     {
 
@@ -419,7 +419,7 @@ public class Controller
         String roomTypeString = null;
         for (int i = 0; i < roomTypesList.size(); i++)
         {
-            if (roomTypesList.get(i).getId()==roomType)
+            if (roomTypesList.get(i).getId()==getRoomTypeAsInt(roomType))
             {
                 roomTypeString = roomTypesList.get(i).getType();
                 i = roomTypesList.size();
@@ -428,11 +428,24 @@ public class Controller
         if (isAvailable(d2, d2, roomTypeString))
         {
 
-            Room room = new Room(roomId, roomType, 1);
+            Room room = new Room(roomId, getRoomTypeAsInt(roomType), 1);
             Reservation reservation = new Reservation(resId, resPayed, deposit, amountPayed, 1, clientId, fromDate, untilDate, roomId);
             return dbf.saveNewRoomReservation(reservation, room);
         }
         return false;
+    }
+    private int getRoomTypeAsInt(String roomType)
+    {
+        if (roomType.equals("Family room"))
+        {
+            return 1;
+        } else if (roomType.equals("Single room"))
+        {
+            return 2;
+        } else
+        {
+            return 3;
+        }
     }
 
     public String getClientId(String input)
