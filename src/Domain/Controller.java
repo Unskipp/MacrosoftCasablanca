@@ -416,7 +416,16 @@ public class Controller
         d1.setTime(fromDate);
         Calendar d2 = Calendar.getInstance();
         d1.setTime(untilDate);
-        if (roomIsAvailable(roomId, d1, d2))
+        String roomTypeString = null;
+        for (int i = 0; i < roomTypesList.size(); i++)
+        {
+            if (roomTypesList.get(i).getId()==roomType)
+            {
+                roomTypeString = roomTypesList.get(i).getType();
+                i = roomTypesList.size();
+            }
+        }
+        if (isAvailable(d2, d2, roomTypeString))
         {
 
             Room room = new Room(roomId, roomType, 1);
