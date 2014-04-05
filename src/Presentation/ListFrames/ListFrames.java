@@ -425,9 +425,9 @@ public class ListFrames extends javax.swing.JFrame
         jTable1.setModel(controller.display("Reservations"));
         Object o = new Object();
         DefaultComboBoxModel model = new DefaultComboBoxModel();
-        o = "Client name";
+        o = "Name";
         model.addElement(o);
-        o = "Client ID";
+        o = "ID";
         model.addElement(o);
         o = "Reservation ID";
         model.addElement(o);
